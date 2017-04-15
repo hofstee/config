@@ -45,10 +45,10 @@
 (global-set-key [(control   up)] (lambda () (interactive) (scroll-down 2)))
 
 ;; M-up/down/left/right to switch window focus
-(global-set-key (kbd "M-<prior>") (lambda () (interactive) (ignore-errors windmove-up)))
-(global-set-key (kbd "M-<next>")  (lambda () (interactive) (ignore-errors windmove-down)))
-(global-set-key (kbd "M-<left>")  (lambda () (interactive) (ignore-errors windmove-left)))
-(global-set-key (kbd "M-<right>") (lambda () (interactive) (ignore-errors windmove-right)))
+(global-set-key (kbd "M-<prior>") (lambda () (interactive) (windmove-up)))
+(global-set-key (kbd "M-<next>")  (lambda () (interactive) (windmove-down)))
+(global-set-key (kbd "M-<left>")  (lambda () (interactive) (windmove-left)))
+(global-set-key (kbd "M-<right>") (lambda () (interactive) (windmove-right)))
 
 (defun comment-or-uncomment-lines ()
   "Comments or uncomments the selected line(s)"
