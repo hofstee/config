@@ -17,6 +17,11 @@
   (yas-global-mode 1))
 (el-get-bundle smarttabs
   (smart-tabs-insinuate 'c))
+(el-get-bundle undo-tree
+  (progn (global-undo-tree-mode 1)
+		 (global-set-key (kbd "C-z") 'undo)
+		 (defalias 'redo 'undo-tree-redo)
+		 (global-set-key (kbd "C-S-z") 'redo)))
 										;(el-get-bundle zenburn-theme
 										;  (load-theme 'zenburn t))
 (el-get 'sync my-packages)
