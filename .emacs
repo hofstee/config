@@ -32,6 +32,17 @@
 
 (show-paren-mode 1)
 (tool-bar-mode -1)
+
+(defun comment-or-uncomment-lines ()
+  "Comments or uncomments the selected line(s)"
+  (interactive)
+  (let (beg end)
+	(if (region-active-p)
+		(progn (setq beg (line-beginning-position (+ (- (count-lines 1 (region-beginning)) (count-lines 1 (point))) 1)))
+			   (setq end (line-end-position (+ (- (count-lines 1 (region-end)) (count-lines 1 (point))) 1))))		
+	  (setq beg (line-beginning-position) end (line-end-position)))
+	(comment-or-uncomment-region beg end)))
+
 (defun align-comments (beginning end)
   "Align comments within marked region."
   (interactive "*r")
@@ -45,27 +56,36 @@
 (setq mouse-wheel-follow-mouse 't)                  ;; scroll window under mouse
 (setq scroll-step 1)                                ;; keyboard scroll one line at a time
 
+;; Create a minor mode with personal keymappings
+(defvar my-mode-map (make-sparse-keymap)
+  "Keymap for `my-mode'.")
+
+;; Toggle comments for selected lines
+(define-key my-mode-map (kbd "C-/") 'comment-or-uncomment-lines)
 ;; C-up/down to scroll the buffer without moving the point
-(global-set-key [(control down)] (lambda () (interactive) (scroll-up   2)))
-(global-set-key [(control   up)] (lambda () (interactive) (scroll-down 2)))
-
+(define-key my-mode-map (kbd "C-<prior>") (lambda () (interactive (scroll-down 2))))
+(define-key my-mode-map (kbd "C-<next>")  (lambda () (interactive (scroll-up   2))))
 ;; M-up/down/left/right to switch window focus
-(global-set-key (kbd "M-<prior>") (lambda () (interactive) (windmove-up)))
-(global-set-key (kbd "M-<next>")  (lambda () (interactive) (windmove-down)))
-(global-set-key (kbd "M-<left>")  (lambda () (interactive) (windmove-left)))
-(global-set-key (kbd "M-<right>") (lambda () (interactive) (windmove-right)))
+(define-key my-mode-map (kbd "M-<prior>") (lambda () (interactive) (windmove-up)))
+(define-key my-mode-map (kbd "M-<next>")  (lambda () (interactive) (windmove-down)))
+(define-key my-mode-map (kbd "M-<left>")  (lambda () (interactive) (windmove-left)))
+(define-key my-mode-map (kbd "M-<right>") (lambda () (interactive) (windmove-right)))
 
-(defun comment-or-uncomment-lines ()
-  "Comments or uncomments the selected line(s)"
-  (interactive)
-  (let (beg end)
-	(if (region-active-p)
-		(progn (setq beg (line-beginning-position (+ (- (count-lines 1 (region-beginning)) (count-lines 1 (point))) 1)))
-			   (setq end (line-end-position (+ (- (count-lines 1 (region-end)) (count-lines 1 (point))) 1))))		
-	  (setq beg (line-beginning-position) end (line-end-position)))
-	(comment-or-uncomment-region beg end)))
+(define-minor-mode my-mode
+  "A minor mode to override major mode key rebinds."
+  :global     t
+  :init-value t
+  :keymap     my-mode-map)
 
-(global-set-key (kbd "C-;") 'comment-or-uncomment-lines)
+;; The keymaps in `emulation-mode-map-alists' take precedence over
+;; `minor-mode-map-alist'
+(add-to-list 'emulation-mode-map-alists `((my-mode . ,my-mode-map)))
+
+;; Turn off the minor mode in the minibuffer
+(defun turn-off-my-mode ()
+  "Turn off my-mode."
+  (my-mode -1))
+(add-hook 'minibuffer-setup-hook #'turn-off-my-mode)
 
 ;; Save previous location for each file
 (if (version< emacs-version "25.1")
