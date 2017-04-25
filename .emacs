@@ -13,6 +13,10 @@
 ;; Packages Currently Installed
 (setq my-packages
       '(paredit slime verilog-mode whitespace))
+(el-get-bundle irony-mode
+  (progn (add-hook 'c++-mode-hook 'irony-mode)
+		 (add-hook 'c-mode-hook 'irony-mode)
+		 (add-hook 'objc-mode-hook 'irony-mode)))
 (el-get-bundle yasnippet
   (yas-global-mode 1))
 (el-get-bundle smarttabs
@@ -25,6 +29,17 @@
 										;(el-get-bundle zenburn-theme
 										;  (load-theme 'zenburn t))
 (el-get 'sync my-packages)
+
+;; irony-mode
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 ;; Personal preferences
 (add-to-list 'default-frame-alist '(cursor-color . "darkgoldenrod1"))
@@ -76,6 +91,8 @@
   :global     t
   :init-value t
   :keymap     my-mode-map)
+
+(my-mode 1)
 
 ;; The keymaps in `emulation-mode-map-alists' take precedence over
 ;; `minor-mode-map-alist'
