@@ -20,6 +20,7 @@
 (setq use-package-always-ensure t)
 
 ;; Packages Currently Installed
+;;(use-package esup)
 (use-package org)
 (use-package paredit)
 (use-package slime)
@@ -40,8 +41,8 @@
   (global-undo-tree-mode 1)
   (defalias 'redo 'undo-tree-redo)
   (bind-keys*
-   ("C-z"   . 'undo)
-   ("C-S-z" . 'redo)))
+   ("C-z"   . (lambda () (interactive) (undo-tree-undo 1)))
+   ("C-S-z" . (lambda () (interactive) (undo-tree-redo 1)))))
 
 ;; irony-mode
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
@@ -87,7 +88,7 @@
 ;; Personal global keybindings
 (bind-keys*
  ;; Toggle comments for selected lines
- ("C-/"       . 'comment-or-uncomment-lines)
+ ("C-/"       . (lambda () (interactive) (comment-or-uncomment-lines)))
  ;; C-up/down to scroll the buffer without moving the point
  ("C-<up>"    . (lambda () (interactive) (scroll-down 2)))
  ("C-<down>"  . (lambda () (interactive) (scroll-up   2)))
