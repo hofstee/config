@@ -1,7 +1,7 @@
-;; (require 'package)
-;; (setq package-enable-at-startup nil)
-;; (add-to-list 'package-archives
-;; 			 '("melpa" . "http://melpa.org/packages/"))
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives
+			 '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
 ;; Bootstrap `quelpa'
@@ -20,7 +20,7 @@
 (setq use-package-always-ensure t)
 
 ;; Packages Currently Installed
-;;(use-package esup)
+(use-package esup)
 (use-package org)
 (use-package paredit)
 (use-package slime)
