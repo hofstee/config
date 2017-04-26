@@ -20,6 +20,7 @@
 (setq use-package-always-ensure t)
 
 ;; Packages Currently Installed
+(use-package org)
 (use-package paredit)
 (use-package slime)
 (use-package verilog-mode
@@ -40,8 +41,7 @@
   (defalias 'redo 'undo-tree-redo)
   (bind-keys*
    ("C-z"   . 'undo)
-   ("C-S-z" . 'redo))
-
+   ("C-S-z" . 'redo)))
 
 ;; irony-mode
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
