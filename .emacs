@@ -26,19 +26,21 @@
   :quelpa (verilog-mode :fetcher github :repo "veripool/verilog-mode"))
 (use-package whitespace)
 (use-package irony
-  :config (progn (add-hook 'c++-mode-hook 'irony-mode)
-				 (add-hook 'c-mode-hook 'irony-mode)
-				 (add-hook 'objc-mode-hook 'irony-mode)))
+  :config
+  (add-hook 'c++-mode-hook  'irony-mode)
+  (add-hook 'c-mode-hook    'irony-mode))
 (use-package yasnippet
   :config (yas-global-mode 1))
 (use-package smart-tabs-mode
   ;; :quelpa (smart-tabs-mode :fetcher github :repo "jcsalomon/smarttabs")
   :config (smart-tabs-insinuate 'c 'c++))
 (use-package undo-tree
-  :config (progn (global-undo-tree-mode 1)
-				 (global-set-key (kbd "C-z") 'undo)
-				 (defalias 'redo 'undo-tree-redo)
-				 (global-set-key (kbd "C-S-z") 'redo)))
+  :config
+  (global-undo-tree-mode 1)
+  (defalias 'redo 'undo-tree-redo)
+  (bind-keys*
+   ("C-z"   . 'undo)
+   ("C-S-z" . 'redo))
 
 
 ;; irony-mode
@@ -90,8 +92,8 @@
  ("C-<up>"    . (lambda () (interactive) (scroll-down 2)))
  ("C-<down>"  . (lambda () (interactive) (scroll-up   2)))
  ;; M-up/down/left/right to switch window focus
- ("M-<up>"    . (lambda () (interactive) (windmove-up)))
- ("M-<down>"  . (lambda () (interactive) (windmove-down)))
+ ("M-<prior>" . (lambda () (interactive) (windmove-up)))
+ ("M-<next>"  . (lambda () (interactive) (windmove-down)))
  ("M-<left>"  . (lambda () (interactive) (windmove-left)))
  ("M-<right>" . (lambda () (interactive) (windmove-right))))
 
