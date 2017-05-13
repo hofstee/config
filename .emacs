@@ -76,6 +76,7 @@
 
 (setq tramp-default-method "ssh")
 (tool-bar-mode -1)
+(menu-bar-mode -1)
 
 (defun comment-or-uncomment-lines ()
   "Comments or uncomments the selected line(s)"
