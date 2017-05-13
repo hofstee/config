@@ -73,6 +73,10 @@
 (set-cursor-color "darkgoldenrod1")
 (add-to-list 'default-frame-alist '(cursor-color . "darkgoldenrod1"))
 (add-to-list 'default-frame-alist '(cursor-type  . box))
+(let ((default-font "NotoMono-10"))
+  (progn (add-to-list 'default-frame-alist '(font . default-font))
+		 (set-face-attribute 'default nil :font default-font)
+		 (set-face-attribute 'default t :font default-font)))
 
 (setq tramp-default-method "ssh")
 (tool-bar-mode -1)
