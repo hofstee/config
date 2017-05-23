@@ -35,6 +35,7 @@
 (use-package slime)
 (use-package verilog-mode
   :quelpa (verilog-mode :fetcher github :repo "veripool/verilog-mode"))
+(use-package lua-mode)
 (use-package whitespace)
 (use-package irony
   :config
