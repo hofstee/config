@@ -58,6 +58,25 @@
   (bind-keys*
    ("C-z"   . (lambda () (interactive) (undo-tree-undo 1)))
    ("C-S-z" . (lambda () (interactive) (undo-tree-redo 1)))))
+(use-package telephone-line
+  :config
+  (setq telephone-line-lhs
+      '((accent . (telephone-line-vc-segment
+                   telephone-line-erc-modified-channels-segment
+                   telephone-line-process-segment))
+        (nil    . (telephone-line-minor-mode-segment
+                   telephone-line-buffer-segment))))
+  (setq telephone-line-rhs
+		'((nil    . (telephone-line-misc-info-segment))
+		  (accent . (telephone-line-major-mode-segment))
+		  (evil   . (telephone-line-airline-position-segment))))
+  (setq telephone-line-primary-right-separator   'telephone-line-abs-left
+		telephone-line-secondary-right-separator 'telephone-line-abs-hollow-left)
+
+  (telephone-line-mode 1))
+;; (use-package sml-modeline
+;;   :config
+;;   (sml-modeline-mode 1))
 
 ;; irony-mode
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
@@ -71,10 +90,12 @@
 (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 ;; Personal preferences
+(set-face-background 'scroll-bar "green")
 (set-cursor-color "darkgoldenrod1")
 (add-to-list 'default-frame-alist '(cursor-color . "darkgoldenrod1"))
 (add-to-list 'default-frame-alist '(cursor-type  . box))
 (let ((default-font "NotoMono-10"))
+;; (let ((default-font "Roboto Mono for Powerline-11"))
   (progn (add-to-list 'default-frame-alist '(font . default-font))
 		 (set-face-attribute 'default nil :font default-font)
 		 (set-face-attribute 'default t :font default-font)))
@@ -82,6 +103,14 @@
 (setq tramp-default-method "ssh")
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(scroll-bar-mode -1)
+
+(defun align-comments (beginning end)
+  "Align comments within marked region."
+  (interactive "*r")
+  (let (indent-tabs-mode align-to-tab-stop)
+    (align-regexp beginning end (concat "\\(\\s-*\\)"
+										(regexp-quote comment-start)))))
 
 (defun comment-or-uncomment-lines ()
   "Comments or uncomments the selected line(s)"
@@ -92,13 +121,6 @@
 			   (setq end (line-end-position (+ (- (count-lines 1 (region-end)) (count-lines 1 (point))) 1))))		
       (setq beg (line-beginning-position) end (line-end-position)))
     (comment-or-uncomment-region beg end)))
-
-(defun align-comments (beginning end)
-  "Align comments within marked region."
-  (interactive "*r")
-  (let (indent-tabs-mode align-to-tab-stop)
-    (align-regexp beginning end (concat "\\(\\s-*\\)"
-										(regexp-quote comment-start)))))
 
 ;; scroll one line at a time (less "jumpy" than defaults)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
