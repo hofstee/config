@@ -26,9 +26,9 @@
   :pin melpa-stable
   :config
   (load-theme 'kaolin t))
-(use-package magit
-  :config
-  (bind-key* "C-x g" (lambda () (interactive) (magit-status))))
+;; (use-package magit
+;;   :config
+;;   (bind-key* "C-x g" (lambda () (interactive) (magit-status))))
 (use-package esup)
 (use-package org)
 (use-package paredit)
@@ -36,11 +36,6 @@
 (use-package verilog-mode
   :quelpa (verilog-mode :fetcher github :repo "veripool/verilog-mode"))
 (use-package lua-mode)
-(use-package whitespace)
-(use-package irony
-  :config
-  (add-hook 'c++-mode-hook  'irony-mode)
-  (add-hook 'c-mode-hook    'irony-mode))
 (use-package yasnippet
   :config (yas-global-mode 1))
 (use-package smart-tabs-mode
@@ -58,22 +53,40 @@
   (bind-keys*
    ("C-z"   . (lambda () (interactive) (undo-tree-undo 1)))
    ("C-S-z" . (lambda () (interactive) (undo-tree-redo 1)))))
-(use-package telephone-line
+(use-package company
   :config
-  (setq telephone-line-lhs
-      '((accent . (telephone-line-vc-segment
-                   telephone-line-erc-modified-channels-segment
-                   telephone-line-process-segment))
-        (nil    . (telephone-line-minor-mode-segment
-                   telephone-line-buffer-segment))))
-  (setq telephone-line-rhs
-		'((nil    . (telephone-line-misc-info-segment))
-		  (accent . (telephone-line-major-mode-segment))
-		  (evil   . (telephone-line-airline-position-segment))))
-  (setq telephone-line-primary-right-separator   'telephone-line-abs-left
-		telephone-line-secondary-right-separator 'telephone-line-abs-hollow-left)
-
-  (telephone-line-mode 1))
+  (add-hook 'after-init-hook 'global-company-mode)
+  (use-package company-lua
+	:config
+	(add-to-list 'company-backends 'company-lua)))
+;; (use-package irony
+;;   :config
+;;   (add-hook 'c++-mode-hook  'irony-mode)
+;;   (add-hook 'c-mode-hook    'irony-mode))
+(use-package flycheck
+  :config
+  (global-flycheck-mode))
+;; (use-package flycheck-irony
+;;   :config
+;;   (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+(use-package powerline
+  :config
+  (powerline-default-theme))
+;; (use-package telephone-line
+;;   :config
+;;   (setq telephone-line-lhs
+;;       '((accent . (telephone-line-vc-segment
+;;                    telephone-line-erc-modified-channels-segment
+;;                    telephone-line-process-segment))
+;;         (nil    . (telephone-line-minor-mode-segment
+;;                    telephone-line-buffer-segment))))
+;;   (setq telephone-line-rhs
+;; 		'((nil    . (telephone-line-misc-info-segment))
+;; 		  (accent . (telephone-line-major-mode-segment))
+;; 		  (evil   . (telephone-line-airline-position-segment))))
+;;   (setq telephone-line-primary-right-separator   'telephone-line-abs-left
+;; 		telephone-line-secondary-right-separator 'telephone-line-abs-hollow-left)
+;;   (telephone-line-mode 1))
 ;; (use-package sml-modeline
 ;;   :config
 ;;   (sml-modeline-mode 1))
@@ -81,16 +94,15 @@
 ;; irony-mode
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
 ;; irony-mode's buffers by irony-mode's function
-(defun my-irony-mode-hook ()
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+;; (defun my-irony-mode-hook ()
+;;   (define-key irony-mode-map [remap completion-at-point]
+;;     'irony-completion-at-point-async)
+;;   (define-key irony-mode-map [remap complete-symbol]
+;;     'irony-completion-at-point-async))
+;; (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 ;; Personal preferences
-(set-face-background 'scroll-bar "green")
 (set-cursor-color "darkgoldenrod1")
 (add-to-list 'default-frame-alist '(cursor-color . "darkgoldenrod1"))
 (add-to-list 'default-frame-alist '(cursor-type  . box))
@@ -99,6 +111,23 @@
   (progn (add-to-list 'default-frame-alist '(font . default-font))
 		 (set-face-attribute 'default nil :font default-font)
 		 (set-face-attribute 'default t :font default-font)))
+
+(defun powerline-hud (face1 face2 &optional width)
+  "Return an XPM of relative buffer location using FACE1 and FACE2 of optional WIDTH."
+  (unless width (setq width 2))
+  (let ((color1 (if face1 (face-background face1) "None"))
+        (color2 (if face2 (face-background face2) "None"))
+        (height (or powerline-height (frame-char-height)))
+        pmax
+        pmin
+        (ws (window-start))
+        (we (window-end)))
+    (save-restriction
+      (widen)
+      (setq pmax (point-max))
+      (setq pmin (point-min)))
+    (pl/percent-xpm height pmax pmin we ws
+                    (* (frame-char-width) width) color1 color2)))
 
 (setq tramp-default-method "ssh")
 (tool-bar-mode -1)
@@ -113,12 +142,12 @@
 										(regexp-quote comment-start)))))
 
 (defun comment-or-uncomment-lines ()
-  "Comments or uncomments the selected line(s)"
+  "Comments or uncomments the selected line(s)."
   (interactive)
   (let (beg end)
     (if (region-active-p)
 		(progn (setq beg (line-beginning-position (+ (- (count-lines 1 (region-beginning)) (count-lines 1 (point))) 1)))
-			   (setq end (line-end-position (+ (- (count-lines 1 (region-end)) (count-lines 1 (point))) 1))))		
+			   (setq end (line-end-position (+ (- (count-lines 1 (region-end)) (count-lines 1 (point))) 1))))
       (setq beg (line-beginning-position) end (line-end-position)))
     (comment-or-uncomment-region beg end)))
 
@@ -171,3 +200,17 @@
 			  c-basic-offset 4
 			  tab-width 4
 			  indent-tabs-mode t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+	(company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-theme irony esup))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

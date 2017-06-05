@@ -24,7 +24,6 @@
 ;; ;; Visual preferences
 ;; ;; (load-module "ttf-fonts")
 ;; ;; (set-font "NotoMono-10")
-(run-shell-command "feh --bg-scale '/home/hofstee/Downloads/wallpaper.png'")
 
 ;; (set-fg-color "white")
 ;; (set-bg-color "black")
@@ -78,6 +77,8 @@
 ;; 					(setf (gethash gnum *layouts*) (dump-group-to-file (current-group)))
 ;; 					(run-commands "only")))))
 ;; (define-key *root-map* (kbd "F11") "toggle-full-layout")
+
+(run-shell-command "feh --bg-scale '/home/hofstee/Downloads/wallpaper.png'")
 
 ;; Custom keybindings
 (define-key *root-map* (kbd "c")   "exec urxvt")
