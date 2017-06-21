@@ -80,6 +80,9 @@
 
 (run-shell-command "feh --bg-scale '/home/hofstee/Downloads/wallpaper.png'")
 
+;; Misc preferences
+(setf *mouse-focus-policy* :click)
+
 ;; Custom keybindings
 (define-key *root-map* (kbd "c")   "exec urxvt")
 (define-key *root-map* (kbd "C-c") "exec urxvt")
