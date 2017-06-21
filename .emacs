@@ -157,6 +157,8 @@
 (setq mouse-wheel-follow-mouse 't)                  ;; scroll window under mouse
 (setq scroll-step 1)                                ;; keyboard scroll one line at a time
 
+(setq fast-but-imprecise-scrolling 't) ;; make scrolling faster
+
 ;; Personal global keybindings
 (bind-keys*
  ;; Toggle comments for selected lines
