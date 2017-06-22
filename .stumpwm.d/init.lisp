@@ -1,5 +1,12 @@
 (in-package :stumpwm)
 
+;; set up a swank server for live reloading
+(require :swank)
+(swank-loader:init)
+(swank:create-server :port 4004
+                     :style swank:*communication-style*
+                     :dont-close t)
+
 ;; load external rc files
 (defvar *load-directory*
   (directory-namestring

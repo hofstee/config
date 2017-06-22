@@ -32,7 +32,11 @@
 (use-package esup)
 (use-package org)
 (use-package paredit)
-(use-package slime)
+(use-package slime
+  :config
+  (setq inferior-lisp-program "sbcl")
+  (load (expand-file-name "~/quicklisp/slime-helper.el"))
+  (slime-setup '(slime-company)))
 (use-package verilog-mode
   :quelpa (verilog-mode :fetcher github :repo "veripool/verilog-mode"))
 (use-package lua-mode)
@@ -58,7 +62,10 @@
   (add-hook 'after-init-hook 'global-company-mode)
   (use-package company-lua
 	:config
-	(add-to-list 'company-backends 'company-lua)))
+	(add-to-list 'company-backends 'company-lua))
+  (use-package slime-company
+	:config
+	(add-to-list 'company-backends 'slime-company)))
 ;; (use-package irony
 ;;   :config
 ;;   (add-hook 'c++-mode-hook  'irony-mode)
@@ -164,8 +171,8 @@
  ;; Toggle comments for selected lines
  ("C-/"       . (lambda () (interactive) (comment-or-uncomment-lines)))
  ;; C-up/down to scroll the buffer without moving the point
- ("C-<up>"    . (lambda () (interactive) (scroll-down 2)))
- ("C-<down>"  . (lambda () (interactive) (scroll-up   2)))
+ ("C-<up>"    . (lambda () (interactive) (scroll-down 3)))
+ ("C-<down>"  . (lambda () (interactive) (scroll-up   3)))
  ;; M-up/down/left/right to switch window focus
  ("M-<prior>" . (lambda () (interactive) (windmove-up)))
  ("M-<next>"  . (lambda () (interactive) (windmove-down)))
@@ -209,7 +216,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-theme irony esup))))
+	(slime-company company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-theme irony esup))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
