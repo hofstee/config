@@ -36,6 +36,8 @@
 ! urxvt.font: xft:NimbusMonoL:size=8:antialias=true:style=Bold
 ! urxvt.font: xft:DejaVuSansMono:size=8:antialias=true
 urxvt.font: xft:NotoMono:size=10:antialias=true
+! urxvt.font: xft:NotoMono:pixelsize=10:antialias=true,\
+			! xft:Ubuntu Mono:pixelsize=12:antialias=true
 ! urxvt.font: xft:Inconsolata for Powerline:size=10:antialias=true
 ! urxvt.font: xft:FreeMono:size=8:antialias=true
 
@@ -44,8 +46,9 @@ urxvt.scrollBar:       false
 urxvt.cursorBlink:     true
 urxvt.cursorUnderline: false
 urxvt.cursorColor:     darkgoldenrod1
+urxvt.internalBorder:  12             ! depends on font for window size matching
 
 ! behavior
-urxvt.scrollTtyOutput:   false ! do not scroll with output
-urxvt.scrollWithBuffer:  true  ! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
-urxvt.scrollTtyKeypress: true  ! scroll back to the bottom on keypress
+! urxvt.scrollTtyOutput:   false ! do not scroll with output
+! urxvt.scrollWithBuffer:  true  ! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+! urxvt.scrollTtyKeypress: true  ! scroll back to the bottom on keypress

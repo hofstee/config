@@ -40,6 +40,9 @@
 (use-package verilog-mode
   :quelpa (verilog-mode :fetcher github :repo "veripool/verilog-mode"))
 (use-package lua-mode)
+(use-package yaml-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 (use-package yasnippet
   :config (yas-global-mode 1))
 (use-package smart-tabs-mode
@@ -76,6 +79,9 @@
 ;; (use-package flycheck-irony
 ;;   :config
 ;;   (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+(use-package wakatime-mode
+  :config
+  (global-wakatime-mode))
 (use-package powerline
   :config
   (powerline-default-theme))
@@ -110,6 +116,8 @@
 ;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 ;; Personal preferences
+(setq frame-resize-pixelwise t)
+
 (set-cursor-color "darkgoldenrod1")
 (add-to-list 'default-frame-alist '(cursor-color . "darkgoldenrod1"))
 (add-to-list 'default-frame-alist '(cursor-type  . box))
@@ -216,7 +224,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(slime-company company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-theme irony esup))))
+	(yaml-mode slime-company company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-theme irony esup))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

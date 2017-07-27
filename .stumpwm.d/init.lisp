@@ -46,7 +46,7 @@
 ;; (setf *maxsize-border-width* 1000)
 ;; (setf *transient-border-width* 1000)
 ;; (setf *normal-border-width* 1000)
-;; (setf *window-border-style* :tight)
+(setf *window-border-style* :tight)
 ;; ;; (set-float-focus-color "")
 ;; ;; (set-float-unfocus-color "")
 
