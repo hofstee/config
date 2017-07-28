@@ -31,6 +31,17 @@
 *color15: #777777
 
 !----------------------------------------------------------------------
+! e m a c s
+
+emacs.bitmapIcon:         off
+emacs.menuBar:            off
+emacs.verticalScrollBars: off
+emacs.toolBar:            off
+emacs.cursorColor:        darkgoldenrod1
+! emacs.fontBackend:        xft
+! emacs.font:               xft:NotoMono:size=10:antialias=true
+
+!----------------------------------------------------------------------
 ! u r x v t
 
 ! urxvt.font: xft:NimbusMonoL:size=8:antialias=true:style=Bold
