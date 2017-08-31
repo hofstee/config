@@ -47,7 +47,10 @@
   :config (yas-global-mode 1))
 (use-package smart-tabs-mode
   ;; :quelpa (smart-tabs-mode :fetcher github :repo "jcsalomon/smarttabs")
-  :config (smart-tabs-insinuate 'c 'c++))
+  :config
+  ;; (smart-tabs-add-language-support lua lua-mode-hook
+  ;;   ((lua-indent-line . lua-indent-level)))
+  (smart-tabs-insinuate 'c 'c++))
 (use-package smartparens
   :config
   (setq sp-show-pair-delay 0)
@@ -56,6 +59,7 @@
 (use-package undo-tree
   :config
   (global-undo-tree-mode 1)
+  (setq undo-tree-auto-save-history t)
   (defalias 'redo 'undo-tree-redo)
   (bind-keys*
    ("C-z"   . (lambda () (interactive) (undo-tree-undo 1)))
@@ -218,11 +222,24 @@
       auto-save-interval 200 ; number of keystrokes between auto-saves (default: 300)
       )
 
+;; Globally disable tabs, re-enable on a per language basis
+(setq-default indent-tabs-mode nil
+			  tab-width 4)
+
+;; Don't convert tabs to spaces on backspace.
+(setq backward-delete-char-untabify-method nil)
+
+;; Utility functions for easy adding to hooks.
+(defun enable-indent-tabs-mode ()
+  "Set `indent-tabs-mode' to t in the current buffer."
+  (setq indent-tabs-mode t))
+(defun disable-indent-tabs-mode ()
+  "Set `indent-tabs-mode' to nil in the current buffer."
+  (setq indent-tabs-mode nil))
+
 ;; C Preferences
 (setq-default c-default-style "stroustrup"
-			  c-basic-offset 4
-			  tab-width 4
-			  indent-tabs-mode t)
+			  c-basic-offset 4)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

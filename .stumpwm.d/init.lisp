@@ -93,6 +93,8 @@
 ;; Custom keybindings
 (define-key *root-map* (kbd "c")   "exec urxvt")
 (define-key *root-map* (kbd "C-c") "exec urxvt")
+(define-key *root-map* (kbd "a")   "exec code")
+(define-key *root-map* (kbd "C-a") "exec code")
 (define-key *root-map* (kbd "C-Up")    "move-focus up")
 (define-key *root-map* (kbd "C-Down")  "move-focus down")
 (define-key *root-map* (kbd "C-Left")  "move-focus left")
