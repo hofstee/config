@@ -229,6 +229,7 @@
 ;; Don't convert tabs to spaces on backspace.
 (setq backward-delete-char-untabify-method nil)
 
+
 ;; Utility functions for easy adding to hooks.
 (defun enable-indent-tabs-mode ()
   "Set `indent-tabs-mode' to t in the current buffer."
@@ -236,6 +237,9 @@
 (defun disable-indent-tabs-mode ()
   "Set `indent-tabs-mode' to nil in the current buffer."
   (setq indent-tabs-mode nil))
+
+;; Before save hooks
+(add-hook 'before-save-hook #'whitespace-cleanup)
 
 ;; C Preferences
 (setq-default c-default-style "stroustrup"
