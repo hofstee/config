@@ -1,9 +1,9 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
-			 '("melpa" . "http://melpa.org/packages/"))
+             '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives
-			 '("melpa-stable" . "http://stable.melpa.org/packages/"))
+             '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (package-initialize)
 
 ;; Bootstrap `quelpa'
@@ -40,6 +40,50 @@
 (use-package verilog-mode
   :quelpa (verilog-mode :fetcher github :repo "veripool/verilog-mode"))
 (use-package lua-mode)
+(use-package dtrt-indent
+  :config
+  (dtrt-indent-mode))
+;; (use-package treemacs
+;;   :ensure t
+;;   :defer t
+;;   :config
+;;   (progn
+;;     (setq treemacs-follow-after-init          t
+;;           treemacs-width                      35
+;;           treemacs-indentation                2
+;;           treemacs-git-integration            t
+;;           treemacs-collapse-dirs              3
+;;           treemacs-silent-refresh             nil
+;;           treemacs-change-root-without-asking nil
+;;           treemacs-sorting                    'alphabetic-desc
+;;           treemacs-show-hidden-files          t
+;;           treemacs-never-persist              nil
+;;           treemacs-is-never-other-window      nil
+;;           treemacs-goto-tag-strategy          'refetch-index)
+
+;;     (treemacs-follow-mode t)
+;;     (treemacs-filewatch-mode t))
+;;   :bind
+;;   (:map global-map
+;;         ([f8]         . treemacs-toggle)
+;;         ("M-0"        . treemacs-select-window)
+;;         ("C-c 1"      . treemacs-delete-other-windows)
+;;         ("M-m ft"     . treemacs-toggle)
+;;         ("M-m fT"     . treemacs)
+;;         ("M-m fB"     . treemacs-bookmark)
+;;         ("M-m f C-t"  . treemacs-find-file)
+;;         ("M-m f M-t"  . treemacs-find-tag)))
+;; (use-package treemacs-projectile
+;;   :defer t
+;;   :ensure t
+;;   :config
+;;   (setq treemacs-header-function #'treemacs-projectile-create-header)
+;;   :bind (:map global-map
+;;               ("M-m fP" . treemacs-projectile)
+;;               ("M-m fp" . treemacs-projectile-toggle)))
+(use-package dashboard
+  :config
+  (dashboard-setup-startup-hook))
 (use-package yaml-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
@@ -68,11 +112,11 @@
   :config
   (add-hook 'after-init-hook 'global-company-mode)
   (use-package company-lua
-	:config
-	(add-to-list 'company-backends 'company-lua))
+    :config
+    (add-to-list 'company-backends 'company-lua))
   (use-package slime-company
-	:config
-	(add-to-list 'company-backends 'slime-company)))
+    :config
+    (add-to-list 'company-backends 'slime-company)))
 ;; (use-package irony
 ;;   :config
 ;;   (add-hook 'c++-mode-hook  'irony-mode)
@@ -104,15 +148,23 @@
 ;;         (nil    . (telephone-line-minor-mode-segment
 ;;                    telephone-line-buffer-segment))))
 ;;   (setq telephone-line-rhs
-;; 		'((nil    . (telephone-line-misc-info-segment))
-;; 		  (accent . (telephone-line-major-mode-segment))
-;; 		  (evil   . (telephone-line-airline-position-segment))))
+;;      '((nil    . (telephone-line-misc-info-segment))
+;;        (accent . (telephone-line-major-mode-segment))
+;;        (evil   . (telephone-line-airline-position-segment))))
 ;;   (setq telephone-line-primary-right-separator   'telephone-line-abs-left
-;; 		telephone-line-secondary-right-separator 'telephone-line-abs-hollow-left)
+;;      telephone-line-secondary-right-separator 'telephone-line-abs-hollow-left)
 ;;   (telephone-line-mode 1))
 ;; (use-package sml-modeline
 ;;   :config
 ;;   (sml-modeline-mode 1))
+(use-package dumb-jump
+  :bind (("M-g o" . dumb-jump-go-other-window)
+         ("M-g j" . dumb-jump-go)
+         ("M-g i" . dumb-jump-go-prompt)
+         ("M-g x" . dumb-jump-go-prefer-external)
+         ("M-g z" . dumb-jump-go-prefer-external-other-window))
+  :config (setq dumb-jump-selector 'ivy) ;; (setq dumb-jump-selector 'helm)
+  :ensure)
 
 ;; irony-mode
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
@@ -132,10 +184,10 @@
 (add-to-list 'default-frame-alist '(cursor-color . "darkgoldenrod1"))
 (add-to-list 'default-frame-alist '(cursor-type  . box))
 (let ((default-font "NotoMono-10"))
-;; (let ((default-font "Roboto Mono for Powerline-11"))
+  ;; (let ((default-font "Roboto Mono for Powerline-11"))
   (progn (add-to-list 'default-frame-alist '(font . default-font))
-		 (set-face-attribute 'default nil :font default-font)
-		 (set-face-attribute 'default t :font default-font)))
+         (set-face-attribute 'default nil :font default-font)
+         (set-face-attribute 'default t :font default-font)))
 
 (defun powerline-hud (face1 face2 &optional width)
   "Return an XPM of relative buffer location using FACE1 and FACE2 of optional WIDTH."
@@ -164,17 +216,23 @@
   (interactive "*r")
   (let (indent-tabs-mode align-to-tab-stop)
     (align-regexp beginning end (concat "\\(\\s-*\\)"
-										(regexp-quote comment-start)))))
+                                        (regexp-quote comment-start)))))
 
 (defun comment-or-uncomment-lines ()
   "Comments or uncomments the selected line(s)."
   (interactive)
   (let (beg end)
     (if (region-active-p)
-		(progn (setq beg (line-beginning-position (+ (- (count-lines 1 (region-beginning)) (count-lines 1 (point))) 1)))
-			   (setq end (line-end-position (+ (- (count-lines 1 (region-end)) (count-lines 1 (point))) 1))))
+        (progn (setq beg (line-beginning-position (+ (- (count-lines 1 (region-beginning)) (count-lines 1 (point))) 1)))
+               (setq end (line-end-position (+ (- (count-lines 1 (region-end)) (count-lines 1 (point))) 1))))
       (setq beg (line-beginning-position) end (line-end-position)))
     (comment-or-uncomment-region beg end)))
+
+(defun nuke-all-buffers ()
+  "Kill all open buffers."
+  (interactive)
+  (mapcar 'kill-buffer (buffer-list))
+  (delete-other-windows))
 
 ;; scroll one line at a time (less "jumpy" than defaults)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
@@ -188,6 +246,8 @@
 (bind-keys*
  ;; Toggle comments for selected lines
  ("C-/"       . (lambda () (interactive) (comment-or-uncomment-lines)))
+ ("C-x K"     . (lambda () (interactive) (nuke-all-buffers)))
+ ("C-x C-b"   . (lambda () (interactive) (ibuffer)))
  ;; C-up/down to scroll the buffer without moving the point
  ("C-<up>"    . (lambda () (interactive) (scroll-down 3)))
  ("C-<down>"  . (lambda () (interactive) (scroll-up   3)))
@@ -224,7 +284,7 @@
 
 ;; Globally disable tabs, re-enable on a per language basis
 (setq-default indent-tabs-mode nil
-			  tab-width 4)
+              tab-width 4)
 
 ;; Don't convert tabs to spaces on backspace.
 (setq backward-delete-char-untabify-method nil)
@@ -241,17 +301,21 @@
 ;; Before save hooks
 (add-hook 'before-save-hook #'whitespace-cleanup)
 
+;; Allow remote dir-locals
+(setq enable-remote-dir-locals t)
+
 ;; C Preferences
 (setq-default c-default-style "stroustrup"
-			  c-basic-offset 4)
+              c-basic-offset 4)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(dtrt-indent-mode t nil (dtrt-indent))
  '(package-selected-packages
    (quote
-	(multiple-cursors yaml-mode slime-company company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-theme irony esup)))
+    (dumb-jump dashboard treemacs dtrt-indent drtr-indent multiple-cursors yaml-mode slime-company company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-theme irony esup)))
  '(wakatime-cli-path "/usr/local/bin/wakatime")
  '(wakatime-python-bin nil))
 (custom-set-faces
