@@ -1,11 +1,11 @@
 (in-package :stumpwm)
 
 ;; set up a swank server for live reloading
-(require :swank)
-(swank-loader:init)
-(swank:create-server :port 4004
-                     :style swank:*communication-style*
-                     :dont-close t)
+;; (require :swank)
+;; (swank-loader:init)
+;; (swank:create-server :port 4004
+;;                      :style swank:*communication-style*
+;;                      :dont-close t)
 
 ;; load external rc files
 (defvar *load-directory*
@@ -60,35 +60,36 @@
 
 (setf *screen-mode-line-format*
       (list "[^B%n^b] %W^>"
-			'(:eval (run-shell-command *battery-status-command* t))
-			" | %d"))
+            '(:eval (run-shell-command *battery-status-command* t))
+            " | %d"))
 
 (setf *window-format* "%m%n%s%c")
 
 (setf *mode-line-timeout* 1)
 
 ;; Turn on the new mode line.
-(toggle-mode-line (current-screen)
-				  (current-head))
+(if (not (head-mode-line (current-head)))
+    (toggle-mode-line (current-screen)
+                      (current-head)))
 
 ;; Toggle back and forth between single window
 ;; (defparameter *layouts* (make-hash-table :test #'eql))
 ;; (defcommand toggle-full-layout () ()
-;; 			(let* ((gnum    (group-number (current-group)))
-;; 				   (currlay (gethash gnum *layouts*)))
-;; 			  (if currlay
-;; 				  (progn
-;; 					(restore-group-from-file (current-group) currlay)
-;; 					(setf (gethash gnum *layouts*) nil))
-;; 				  (progn
-;; 					(setf (gethash gnum *layouts*) (dump-group-to-file (current-group)))
-;; 					(run-commands "only")))))
+;;          (let* ((gnum    (group-number (current-group)))
+;;                 (currlay (gethash gnum *layouts*)))
+;;            (if currlay
+;;                (progn
+;;                  (restore-group-from-file (current-group) currlay)
+;;                  (setf (gethash gnum *layouts*) nil))
+;;                (progn
+;;                  (setf (gethash gnum *layouts*) (dump-group-to-file (current-group)))
+;;                  (run-commands "only")))))
 ;; (define-key *root-map* (kbd "F11") "toggle-full-layout")
 
 (run-shell-command "feh --bg-scale '/home/hofstee/Downloads/wallpaper.png'")
 
 ;; Misc preferences
-(setf *mouse-focus-policy* :click)
+(setf *mouse-focus-policy* :click) ;; sloppy, click, ignore
 
 ;; Custom keybindings
 (define-key *root-map* (kbd "c")   "exec urxvt")

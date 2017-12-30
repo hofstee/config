@@ -8,10 +8,10 @@
 
 ;; Bootstrap `quelpa'
 (if (require 'quelpa nil t)
-    (quelpa-self-upgrade)
-  (with-temp-buffer
-    (url-insert-file-contents "https://raw.github.com/quelpa/quelpa/master/bootstrap.el")
-    (eval-buffer)))
+   (quelpa-self-upgrade)
+ (with-temp-buffer
+   (url-insert-file-contents "https://raw.github.com/quelpa/quelpa/master/bootstrap.el")
+   (eval-buffer)))
 
 ;; Get `quelpa-use-package'
 (quelpa
@@ -35,7 +35,7 @@
 (use-package slime
   :config
   (setq inferior-lisp-program "sbcl")
-  (load (expand-file-name "~/quicklisp/slime-helper.el"))
+  (load (expand-file-name "~/tools/quicklisp/slime-helper.el"))
   (slime-setup '(slime-company)))
 (use-package verilog-mode
   :quelpa (verilog-mode :fetcher github :repo "veripool/verilog-mode"))
