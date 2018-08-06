@@ -8,10 +8,11 @@
 
 ;; Bootstrap `quelpa'
 (if (require 'quelpa nil t)
-   (quelpa-self-upgrade)
- (with-temp-buffer
-   (url-insert-file-contents "https://raw.github.com/quelpa/quelpa/master/bootstrap.el")
-   (eval-buffer)))
+    (ignore-errors ;; Might not always have internet connection
+      (quelpa-self-upgrade))
+  (with-temp-buffer
+    (url-insert-file-contents "https://raw.github.com/quelpa/quelpa/master/bootstrap.el")
+    (eval-buffer)))
 
 ;; Get `quelpa-use-package'
 (quelpa
@@ -22,10 +23,10 @@
 (setq use-package-always-ensure t)
 
 ;; Packages Currently Installed
-(use-package kaolin-theme
+(use-package kaolin-themes
   :pin melpa-stable
   :config
-  (load-theme 'kaolin t))
+  (load-theme 'kaolin-dark t))
 ;; (use-package magit
 ;;   :config
 ;;   (bind-key* "C-x g" (lambda () (interactive) (magit-status))))
@@ -183,7 +184,7 @@
 (set-cursor-color "darkgoldenrod1")
 (add-to-list 'default-frame-alist '(cursor-color . "darkgoldenrod1"))
 (add-to-list 'default-frame-alist '(cursor-type  . box))
-(let ((default-font "NotoMono-10"))
+(let ((default-font "NotoMono-13"))
   ;; (let ((default-font "Roboto Mono for Powerline-11"))
   (progn (add-to-list 'default-frame-alist '(font . default-font))
          (set-face-attribute 'default nil :font default-font)
@@ -315,7 +316,7 @@
  '(dtrt-indent-mode t nil (dtrt-indent))
  '(package-selected-packages
    (quote
-    (dumb-jump dashboard treemacs dtrt-indent drtr-indent multiple-cursors yaml-mode slime-company company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-theme irony esup)))
+    (dumb-jump dashboard treemacs dtrt-indent drtr-indent multiple-cursors yaml-mode slime-company company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-themes irony esup)))
  '(wakatime-cli-path "/usr/local/bin/wakatime")
  '(wakatime-python-bin nil))
 (custom-set-faces
