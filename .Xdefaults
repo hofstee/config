@@ -56,7 +56,7 @@ emacs.cursorColor:        darkgoldenrod1
 ! urxvt.font: xft:DejaVuSansMono:size=8:antialias=true
 urxvt.font: xft:NotoMono:size=10:antialias=true
 ! urxvt.font: xft:NotoMono:pixelsize=10:antialias=true,\
-			! xft:Ubuntu Mono:pixelsize=12:antialias=true
+            ! xft:Ubuntu Mono:pixelsize=12:antialias=true
 ! urxvt.font: xft:Inconsolata for Powerline:size=10:antialias=true
 ! urxvt.font: xft:FreeMono:size=8:antialias=true
 

@@ -1,4 +1,4 @@
-set fish_plugins emacs
+# set fish_plugins emacs
 
 function fish_prompt
   # make a neat gradient for the directories on our working directory
