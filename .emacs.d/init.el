@@ -233,6 +233,9 @@
                (tramp-remote-shell "/bin/sh")
                (tramp-remote-shell-args ("-c"))))
 
+(desktop-save-mode 1) ;; save buffers on exit
+
+;; Custom functions
 (defun align-comments (beginning end)
   "Align comments within marked region."
   (interactive "*r")
@@ -345,7 +348,7 @@
  '(dtrt-indent-mode t nil (dtrt-indent))
  '(package-selected-packages
    (quote
-    (dumb-jump dashboard treemacs dtrt-indent drtr-indent multiple-cursors yaml-mode slime-company company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-themes irony esup)))
+    (magit smooth-scroll smooth-scrolling git-gutter fill-column-indicator fci-mode column-marker dumb-jump dashboard treemacs dtrt-indent drtr-indent multiple-cursors yaml-mode slime-company company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-themes irony esup)))
  '(wakatime-cli-path "/usr/local/bin/wakatime")
  '(wakatime-python-bin nil))
 (custom-set-faces
