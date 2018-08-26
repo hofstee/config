@@ -39,7 +39,9 @@
   (dtrt-indent-mode))
 
 (use-package esup)
-(use-package org)
+(use-package org
+  :config
+  (setq org-support-shift-select t))
 (use-package paredit)
 (use-package slime
   :config
