@@ -27,9 +27,12 @@
   :pin melpa-stable
   :config
   (load-theme 'kaolin-dark t))
-;; (use-package magit
-;;   :config
-;;   (bind-key* "C-x g" (lambda () (interactive) (magit-status))))
+(use-package magit
+  :config
+  (bind-key* "C-x g" (lambda () (interactive) (magit-status))))
+(use-package git-gutter
+  :init (global-git-gutter-mode 1))
+
 (use-package esup)
 (use-package org)
 (use-package paredit)
