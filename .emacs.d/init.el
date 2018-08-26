@@ -253,8 +253,10 @@
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
 (setq mouse-wheel-progressive-speed nil)            ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't)                  ;; scroll window under mouse
-(setq scroll-step 1)                                ;; keyboard scroll one line at a time
+(setq scroll-conservatively 101)                    ;; don't center point when scrolling
+(setq scroll-margin 5)                              ;; small buffer of lines when moving point
 
+(setq jit-lock-defer-time nil)         ;; don't defer fontification
 (setq fast-but-imprecise-scrolling 't) ;; make scrolling faster
 
 ;; Personal global keybindings
