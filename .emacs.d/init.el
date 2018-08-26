@@ -281,6 +281,11 @@
  ("M-<left>"  . (lambda () (interactive) (windmove-left)))
  ("M-<right>" . (lambda () (interactive) (windmove-right))))
 
+;; Find a browser for opening URLs
+(setq browse-url-generic-program
+      (executable-find (getenv "BROWSER"))
+      browse-url-browser-function 'browse-url-generic)
+
 ;; Save previous location for each file
 (if (version< emacs-version "25.1")
     (progn
