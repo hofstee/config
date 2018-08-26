@@ -184,6 +184,10 @@
 
 ;; Personal preferences
 (setq frame-resize-pixelwise t)
+(global-visual-line-mode 1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
 
 (set-cursor-color "darkgoldenrod1")
 (add-to-list 'default-frame-alist '(cursor-color . "darkgoldenrod1"))
@@ -213,9 +217,6 @@
 
 (require 'tramp)
 (setq tramp-default-method "ssh")
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
 (add-to-list 'tramp-methods
              '("yadm"
                (tramp-login-program "yadm")
