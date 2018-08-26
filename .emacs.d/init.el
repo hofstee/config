@@ -33,6 +33,11 @@
 (use-package git-gutter
   :init (global-git-gutter-mode 1))
 
+;; Useful package for editing files that have their own ideas about indentation
+(use-package dtrt-indent
+  :config
+  (dtrt-indent-mode))
+
 (use-package esup)
 (use-package org)
 (use-package paredit)
@@ -44,9 +49,6 @@
 (use-package verilog-mode
   :quelpa (verilog-mode :fetcher github :repo "veripool/verilog-mode"))
 (use-package lua-mode)
-(use-package dtrt-indent
-  :config
-  (dtrt-indent-mode))
 ;; (use-package treemacs
 ;;   :ensure t
 ;;   :defer t
