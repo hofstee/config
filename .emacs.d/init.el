@@ -160,12 +160,15 @@
 ;;   :config
 ;;   (sml-modeline-mode 1))
 (use-package dumb-jump
-  :bind (("M-g o" . dumb-jump-go-other-window)
-         ("M-g j" . dumb-jump-go)
-         ("M-g i" . dumb-jump-go-prompt)
-         ("M-g x" . dumb-jump-go-prefer-external)
-         ("M-g z" . dumb-jump-go-prefer-external-other-window))
-  :config (setq dumb-jump-selector 'ivy) ;; (setq dumb-jump-selector 'helm)
+  :bind
+  (("M-g o" . dumb-jump-go-other-window)
+   ("M-g j" . dumb-jump-go)
+   ("M-g i" . dumb-jump-go-prompt)
+   ("M-g x" . dumb-jump-go-prefer-external)
+   ("M-g z" . dumb-jump-go-prefer-external-other-window))
+  :config
+  (setq dumb-jump-selector 'ivy)
+  ;; (setq dumb-jump-selector 'helm)
   :ensure)
 
 ;; irony-mode
@@ -294,13 +297,14 @@
       auto-save-interval 200 ; number of keystrokes between auto-saves (default: 300)
       )
 
-;; Globally disable tabs, re-enable on a per language basis
-(setq-default indent-tabs-mode nil
-              tab-width 4)
+;; Tab settings
+(setq-default indent-tabs-mode nil        ; globally disable tabs, re-enable on a per language basis
+              tab-width 4
+              tab-always-indent 'complete ; indent first then complete if indentation correct
+              )
 
 ;; Don't convert tabs to spaces on backspace.
 (setq backward-delete-char-untabify-method nil)
-
 
 ;; Utility functions for easy adding to hooks.
 (defun enable-indent-tabs-mode ()
