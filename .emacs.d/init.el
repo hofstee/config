@@ -208,10 +208,20 @@
     (pl/percent-xpm height pmax pmin we ws
                     (* (frame-char-width) width) color1 color2)))
 
+(require 'tramp)
 (setq tramp-default-method "ssh")
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+(add-to-list 'tramp-methods
+             '("yadm"
+               (tramp-login-program "yadm")
+               (tramp-login-args (("enter")))
+               (tramp-login-env
+                (("SHELL")
+                 ("/bin/sh")))
+               (tramp-remote-shell "/bin/sh")
+               (tramp-remote-shell-args ("-c"))))
 
 (defun align-comments (beginning end)
   "Align comments within marked region."
