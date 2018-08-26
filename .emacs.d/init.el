@@ -97,12 +97,6 @@
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 (use-package yasnippet
   :config (yas-global-mode 1))
-(use-package smart-tabs-mode
-  ;; :quelpa (smart-tabs-mode :fetcher github :repo "jcsalomon/smarttabs")
-  :config
-  ;; (smart-tabs-add-language-support lua lua-mode-hook
-  ;;   ((lua-indent-line . lua-indent-level)))
-  (smart-tabs-insinuate 'c 'c++))
 (use-package smartparens
   :config
   (setq sp-show-pair-delay 0)
@@ -144,9 +138,9 @@
 (use-package wakatime-mode
   :config
   (global-wakatime-mode))
-(use-package powerline
-  :config
-  (powerline-default-theme))
+;; (use-package powerline
+;;   :config
+;;   (powerline-default-theme))
 ;; (use-package telephone-line
 ;;   :config
 ;;   (setq telephone-line-lhs
