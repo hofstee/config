@@ -135,6 +135,14 @@
 ;; (use-package flycheck-irony
 ;;   :config
 ;;   (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
+(use-package deft
+  :bind ("<f8>" . deft)
+  :commands (deft)
+  :config
+  (setq deft-recursive t
+        deft-extensions '("org" "md" "txt" "tex")))
+
 (use-package wakatime-mode
   :config
   (global-wakatime-mode))
@@ -348,7 +356,7 @@
  '(dtrt-indent-mode t nil (dtrt-indent))
  '(package-selected-packages
    (quote
-    (magit smooth-scroll smooth-scrolling git-gutter fill-column-indicator fci-mode column-marker dumb-jump dashboard treemacs dtrt-indent drtr-indent multiple-cursors yaml-mode slime-company company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-themes irony esup)))
+    (deft magit smooth-scroll smooth-scrolling git-gutter fill-column-indicator fci-mode column-marker dumb-jump dashboard treemacs dtrt-indent drtr-indent multiple-cursors yaml-mode slime-company company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-themes irony esup)))
  '(wakatime-cli-path "/usr/local/bin/wakatime")
  '(wakatime-python-bin nil))
 (custom-set-faces
