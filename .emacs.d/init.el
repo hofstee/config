@@ -358,3 +358,7 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+;; The very last thing done is modify the behavior of the *scratch* buffer. This
+;; way, even if Emacs is running in daemon mode, if the default contents appear
+;; instead, I know something went wrong at startup.
+(setq initial-scratch-message nil)
