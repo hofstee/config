@@ -125,6 +125,7 @@
 ;;   (add-hook 'c-mode-hook    'irony-mode))
 (use-package flycheck
   :config
+  (setq flycheck-global-modes (not 'org-mode))
   (global-flycheck-mode))
 (use-package multiple-cursors
   :config
@@ -141,7 +142,9 @@
   :commands (deft)
   :config
   (setq deft-recursive t
-        deft-extensions '("org" "md" "txt" "tex")))
+        deft-extensions '("md" "org" "tex" "txt")
+        deft-default-extension "org")
+  (define-key deft-mode-map (kbd "C-<backspace>") 'deft-filter-decrement-word))
 
 (use-package wakatime-mode
   :config
