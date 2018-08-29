@@ -4,6 +4,8 @@
              '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("org" . "https://orgmode.org/elpa/"))
 (package-initialize)
 
 ;; Bootstrap `quelpa'
