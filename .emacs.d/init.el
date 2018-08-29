@@ -175,6 +175,10 @@ Inserted by installing org-mode or when a release is made."
 ;;   :config
 ;;   (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 
+(use-package persistent-scratch
+  :config
+  (persistent-scratch-setup-default))
+
 (use-package deft
   :bind ("<f8>" . deft)
   :commands (deft)
