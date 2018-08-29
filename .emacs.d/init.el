@@ -77,7 +77,6 @@ Inserted by installing org-mode or when a release is made."
 (use-package org
   :straight t
   :config
-(use-package paredit)
   (setq org-support-shift-select t)
   (org-babel-do-load-languages
    'org-babel-load-languages
