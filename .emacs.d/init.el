@@ -8,25 +8,25 @@
              '("org" . "https://orgmode.org/elpa/"))
 (package-initialize)
 
-;; Bootstrap `quelpa'
-(if (require 'quelpa nil t)
-    (ignore-errors ;; Might not always have internet connection
-      (quelpa-self-upgrade))
-  (with-temp-buffer
-    (url-insert-file-contents "https://raw.github.com/quelpa/quelpa/master/bootstrap.el")
-    (eval-buffer)))
+;; Bootstrap `straight.el'
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-;; Get `quelpa-use-package'
-(quelpa
- '(quelpa-use-package
-   :fetcher github
-   :repo "quelpa/quelpa-use-package"))
-(eval-when-compile (require 'quelpa-use-package))
-(setq use-package-always-ensure t)
+(straight-use-package 'use-package)
+;; (setq straight-use-package-by-default t)
 
 ;; Packages Currently Installed
 (use-package kaolin-themes
-  :pin melpa-stable
   :config
   (load-theme 'kaolin-dark t))
 (use-package magit
@@ -41,17 +41,54 @@
   (dtrt-indent-mode))
 
 (use-package esup)
+
+;; Installing org with `straight.el'
+(require 'subr-x)
+(straight-use-package 'git)
+
+(defun org-git-version ()
+  "The Git version of org-mode.
+Inserted by installing org-mode or when a release is made."
+  (require 'git)
+  (let ((git-repo (expand-file-name
+                   "straight/repos/org/" user-emacs-directory)))
+    (string-trim
+     (git-run "describe"
+              "--match=release\*"
+              "--abbrev=6"
+              "HEAD"))))
+
+(defun org-release ()
+  "The release version of org-mode.
+Inserted by installing org-mode or when a release is made."
+  (require 'git)
+  (let ((git-repo (expand-file-name
+                   "straight/repos/org/" user-emacs-directory)))
+    (string-trim
+     (string-remove-prefix
+      "release_"
+      (git-run "describe"
+               "--match=release\*"
+               "--abbrev=0"
+               "HEAD")))))
+
+(provide 'org-version)
+
 (use-package org
+  :straight t
   :config
-  (setq org-support-shift-select t))
 (use-package paredit)
+  (setq org-support-shift-select t)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((lua . t))))
 (use-package slime
   :config
   (setq inferior-lisp-program "sbcl")
   (load (expand-file-name "~/tools/quicklisp/slime-helper.el"))
   (slime-setup '(slime-company)))
 (use-package verilog-mode
-  :quelpa (verilog-mode :fetcher github :repo "veripool/verilog-mode"))
+  :straight (verilog-mode :type git :host github :repo "veripool/verilog-mode"))
 (use-package lua-mode)
 ;; (use-package treemacs
 ;;   :ensure t
