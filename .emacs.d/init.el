@@ -284,7 +284,10 @@
 (bind-keys*
  ;; Toggle comments for selected lines
  ("C-/"       . (lambda () (interactive) (comment-or-uncomment-lines)))
+ ;; Close all open buffers
  ("C-x K"     . (lambda () (interactive) (nuke-all-buffers)))
+ ;; Open *scratch* on C-x b
+ ("C-x b"     . (lambda () (interactive) (switch-to-buffer (get-buffer-create "*scratch*"))))
  ("C-x C-b"   . (lambda () (interactive) (ibuffer)))
  ;; C-up/down to scroll the buffer without moving the point
  ("C-<up>"    . (lambda () (interactive) (scroll-down 3)))
