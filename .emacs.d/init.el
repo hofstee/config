@@ -354,20 +354,7 @@
 ;; C Preferences
 (setq-default c-default-style "stroustrup"
               c-basic-offset 4)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(dtrt-indent-mode t nil (dtrt-indent))
- '(package-selected-packages
-   (quote
-    (deft magit smooth-scroll smooth-scrolling git-gutter fill-column-indicator fci-mode column-marker dumb-jump dashboard treemacs dtrt-indent drtr-indent multiple-cursors yaml-mode slime-company company-lua company flycheck-irony flycheck spaceline spaceline-config powerline zenburn-theme yasnippet verilog-mode undo-tree telephone-line sml-modeline smartparens smart-tabs-mode slime quelpa-use-package paredit lua-mode kaolin-themes irony esup)))
- '(wakatime-cli-path "/usr/local/bin/wakatime")
- '(wakatime-python-bin nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
