@@ -185,7 +185,8 @@ Inserted by installing org-mode or when a release is made."
   :config
   (setq deft-recursive t
         deft-extensions '("md" "org" "tex" "txt")
-        deft-default-extension "org")
+        deft-default-extension "org"
+        deft-auto-save-interval 0.0)
   (define-key deft-mode-map (kbd "C-<backspace>") 'deft-filter-decrement-word))
 
 (use-package wakatime-mode
