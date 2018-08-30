@@ -77,7 +77,9 @@ Inserted by installing org-mode or when a release is made."
 (use-package org
   :straight t
   :config
+  (use-package org-tempo)
   (setq org-support-shift-select t)
+  (require 'ob-lua)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((lua . t))))
@@ -275,6 +277,7 @@ Inserted by installing org-mode or when a release is made."
     (pl/percent-xpm height pmax pmin we ws
                     (* (frame-char-width) width) color1 color2)))
 
+;; Configure tramp
 (require 'tramp)
 (setq tramp-default-method "ssh")
 (add-to-list 'tramp-methods
@@ -287,7 +290,8 @@ Inserted by installing org-mode or when a release is made."
                (tramp-remote-shell "/bin/sh")
                (tramp-remote-shell-args ("-c"))))
 
-(desktop-save-mode 1) ;; save buffers on exit
+;; Save buffers on exit
+(desktop-save-mode 1)
 
 ;; Custom functions
 (defun align-comments (beginning end)
