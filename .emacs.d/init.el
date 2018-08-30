@@ -77,7 +77,9 @@ Inserted by installing org-mode or when a release is made."
 (use-package org
   :straight t
   :config
-  (use-package org-tempo)
+  (use-package org-tempo
+    :config
+    (add-to-list 'org-tempo-keywords-alist '("n" . "name")))
   (setq org-support-shift-select t)
   (require 'ob-lua)
   (org-babel-do-load-languages
