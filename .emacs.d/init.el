@@ -199,6 +199,7 @@ Inserted by installing org-mode or when a release is made."
         deft-extensions '("md" "org" "tex" "txt")
         deft-default-extension "org"
         deft-auto-save-interval 0.0)
+  (add-hook 'deft-open-file-hook (lambda () (kill-buffer "*Deft*")))
   (add-hook 'deft-open-file-hook
             (lambda () (let ((title (deft-file-title (buffer-file-name))))
                          (if title (rename-buffer title t)))))
@@ -357,6 +358,9 @@ Inserted by installing org-mode or when a release is made."
  ("M-<next>"  . (lambda () (interactive) (windmove-down)))
  ("M-<left>"  . (lambda () (interactive) (windmove-left)))
  ("M-<right>" . (lambda () (interactive) (windmove-right))))
+
+;; Close `*Ibuffer*' after calling `ibuffer-visit-buffer'
+(advice-add 'ibuffer-visit-buffer :after (lambda (_) (kill-buffer "*Ibuffer*")))
 
 ;; Find a browser for opening URLs
 (setq browse-url-generic-program
