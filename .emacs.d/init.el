@@ -200,7 +200,8 @@ Inserted by installing org-mode or when a release is made."
         deft-default-extension "org"
         deft-auto-save-interval 0.0)
   (add-hook 'deft-open-file-hook
-            (lambda () (rename-buffer (deft-file-title (buffer-file-name)) t)))
+            (lambda () (let ((title (deft-file-title (buffer-file-name))))
+                         (if title (rename-buffer title t)))))
   (define-key deft-mode-map (kbd "C-<backspace>") 'deft-filter-decrement-word))
 
 (use-package wakatime-mode
