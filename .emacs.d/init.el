@@ -80,8 +80,15 @@ Inserted by installing org-mode or when a release is made."
   (use-package org-tempo
     :config
     (add-to-list 'org-tempo-keywords-alist '("n" . "name")))
-  (setq org-support-shift-select t)
-  (require 'ob-lua)
+  (setq org-startup-with-inline-images t
+        org-support-shift-select t)
+  ;; (add-hook 'org-mode-hook
+  ;;           (lambda () (setq org-image-actual-width (window-body-width nil t))))
+  ;; (add-hook 'window-size-change-functions
+  ;;           (lambda (frame) (setq org-image-actual-width (window-body-width nil t))))
+  ;; (add-hook 'window-size-change-functions
+  ;;           (lambda (frame) (setq org-image-actual-width (list (window-body-width nil t)))))
+(require 'ob-lua)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((lua . t))))
