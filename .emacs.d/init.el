@@ -191,6 +191,7 @@ Inserted by installing org-mode or when a release is made."
   (persistent-scratch-setup-default))
 
 (use-package deft
+  :straight t
   :bind ("<f8>" . deft)
   :commands (deft)
   :config
@@ -198,6 +199,8 @@ Inserted by installing org-mode or when a release is made."
         deft-extensions '("md" "org" "tex" "txt")
         deft-default-extension "org"
         deft-auto-save-interval 0.0)
+  (add-hook 'deft-open-file-hook
+            (lambda () (rename-buffer (deft-file-title (buffer-file-name)) t)))
   (define-key deft-mode-map (kbd "C-<backspace>") 'deft-filter-decrement-word))
 
 (use-package wakatime-mode
