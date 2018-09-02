@@ -366,7 +366,8 @@ Inserted by installing org-mode or when a release is made."
  ("M-<right>" . (lambda () (interactive) (windmove-right))))
 
 ;; Close `*Ibuffer*' after calling `ibuffer-visit-buffer'
-(advice-add 'ibuffer-visit-buffer :after (lambda (_) (kill-buffer "*Ibuffer*")))
+(advice-add 'ibuffer-visit-buffer :after (lambda (_) (kill-buffer "*Ibuffer*"))
+            '((name . "close-after-visit")))
 
 ;; Find a browser for opening URLs
 (setq browse-url-generic-program
