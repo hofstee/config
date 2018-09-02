@@ -274,6 +274,10 @@ Inserted by installing org-mode or when a release is made."
   (define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
   (global-fci-mode 1))
 
+(use-package ws-butler
+  :config
+  (ws-butler-global-mode))
+
 (defun powerline-hud (face1 face2 &optional width)
   "Return an XPM of relative buffer location using FACE1 and FACE2 of optional WIDTH."
   (unless width (setq width 2))
@@ -408,9 +412,6 @@ Inserted by installing org-mode or when a release is made."
 (defun disable-indent-tabs-mode ()
   "Set `indent-tabs-mode' to nil in the current buffer."
   (setq indent-tabs-mode nil))
-
-;; Before save hooks
-(add-hook 'before-save-hook #'whitespace-cleanup)
 
 ;; Allow remote dir-locals
 (setq enable-remote-dir-locals t)
