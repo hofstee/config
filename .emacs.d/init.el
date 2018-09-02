@@ -144,8 +144,8 @@ Inserted by installing org-mode or when a release is made."
 (use-package yaml-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
-;; (use-package yasnippet
-;;   :config (yas-global-mode 1))
+(use-package yasnippet
+  :config (yas-global-mode 1))
 (use-package smartparens
   :config
   (setq sp-show-pair-delay 0)
