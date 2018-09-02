@@ -201,8 +201,10 @@ Inserted by installing org-mode or when a release is made."
         deft-auto-save-interval 0.0)
   (add-hook 'deft-open-file-hook (lambda () (kill-buffer "*Deft*")))
   (add-hook 'deft-open-file-hook
-            (lambda () (let ((title (deft-file-title (buffer-file-name))))
-                         (if title (rename-buffer title t)))))
+            (lambda ()
+              "Rename buffer to title of note upon opening."
+              (let ((title (deft-file-title (buffer-file-name))))
+                (if title (rename-buffer title t)))))
   (define-key deft-mode-map (kbd "C-<backspace>") 'deft-filter-decrement-word))
 
 (use-package wakatime-mode
