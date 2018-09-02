@@ -205,6 +205,13 @@ Inserted by installing org-mode or when a release is made."
               "Rename buffer to title of note upon opening."
               (let ((title (deft-file-title (buffer-file-name))))
                 (if title (rename-buffer title t)))))
+  (advice-add 'deft-new-file :after
+              (lambda ()
+                "Insert deft-template with yasnippet when creating new notes."
+                (whitespace-cleanup)
+                (yas-expand-snippet (yas-lookup-snippet "deft-template"))
+                (save-buffer))
+              '((name . "insert-yasnippet-template")))
   (define-key deft-mode-map (kbd "C-<backspace>") 'deft-filter-decrement-word))
 
 (use-package wakatime-mode
