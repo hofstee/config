@@ -210,6 +210,7 @@ Inserted by installing org-mode or when a release is made."
                 "Insert deft-template with yasnippet when creating new notes."
                 (whitespace-cleanup)
                 (yas-expand-snippet (yas-lookup-snippet "deft-template"))
+                (hack-local-variables)
                 (save-buffer))
               '((name . "insert-yasnippet-template")))
   (define-key deft-mode-map (kbd "C-<backspace>") 'deft-filter-decrement-word))
