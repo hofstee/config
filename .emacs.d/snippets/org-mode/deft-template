@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: deft-template
+# key: deft-template
+# --
+Date created: <`(format-time-string "%Y-%m-%d %H:%M:%S")`>
+Last modified: <>
+
+$0
+
+* COMMENT Local Variables
+# Local Variables:
+# time-stamp-pattern: "^Last modified: <%:y-%02m-%02d %02H:%02M:%02S>$"
+# eval: (add-hook 'before-save-hook #'time-stamp)
+# End:
