@@ -80,7 +80,21 @@ Inserted by installing org-mode or when a release is made."
   (use-package org-tempo
     :config
     (add-to-list 'org-tempo-keywords-alist '("n" . "name")))
-  (setq org-startup-with-inline-images t
+  (use-package org-wiki
+    :straight (org-wiki :type git :host github :repo "caiorss/org-wiki")
+    :config
+    (setq org-wiki-location-list '("~/wiki"))
+    (setq org-wiki-location (car org-wiki-location-list))
+    (setq org-wiki-template "")
+    (advice-add 'org-wiki-header :override
+                (lambda ()
+                  "Insert wiki-template with yasnippet when creating new entry."
+                  (set-mark 0)
+                  (yas-expand-snippet (yas-lookup-snippet "wiki-template"))
+                  (hack-local-variables))
+                '((name . "insert-wiki-header"))))
+  (setq org-adapt-indentation nil
+        org-startup-with-inline-images t
         org-support-shift-select t)
   ;; (add-hook 'org-mode-hook
   ;;           (lambda () (setq org-image-actual-width (window-body-width nil t))))
