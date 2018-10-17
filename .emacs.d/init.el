@@ -212,7 +212,11 @@ Inserted by installing org-mode or when a release is made."
   (setq deft-recursive t
         deft-extensions '("md" "org" "tex" "txt")
         deft-default-extension "org"
-        deft-auto-save-interval 0.0)
+        deft-auto-save-interval 0.0
+        deft-use-filter-string-for-filename t
+        deft-file-naming-rules '((noslash . "-")
+                                 (nospace . "_")
+                                 (case-fn . downcase)))
   (add-hook 'deft-open-file-hook (lambda () (kill-buffer "*Deft*")))
   (add-hook 'deft-open-file-hook
             (lambda ()
