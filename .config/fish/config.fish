@@ -41,3 +41,8 @@ end
 
 alias ls="ls --group-directories-first --color=auto"
 alias lua="lua5.3"
+
+# pyenv
+set -x PATH "/home/teguhhofstee/.pyenv/bin" $PATH
+status --is-interactive; and . (pyenv init -|psub)
+status --is-interactive; and . (pyenv virtualenv-init -|psub)
