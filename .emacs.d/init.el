@@ -304,6 +304,10 @@ Inserted by installing org-mode or when a release is made."
   :config
   (ws-butler-global-mode))
 
+(use-package string-inflection
+  :bind
+  (("C-c C-u" . string-inflection-all-cycle)))
+
 (defun powerline-hud (face1 face2 &optional width)
   "Return an XPM of relative buffer location using FACE1 and FACE2 of optional WIDTH."
   (unless width (setq width 2))
