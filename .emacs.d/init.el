@@ -298,12 +298,6 @@ Inserted by installing org-mode or when a release is made."
          (set-face-attribute 'default nil :font default-font)
          (set-face-attribute 'default t :font default-font)))
 
-(use-package fill-column-indicator
-  :config
-  (setq fci-rule-column 80)
-  (define-globalized-minor-mode global-fci-mode fci-mode (lambda () (fci-mode 1)))
-  (global-fci-mode 1))
-
 (use-package ws-butler
   :config
   (ws-butler-global-mode))
