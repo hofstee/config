@@ -283,6 +283,8 @@ Inserted by installing org-mode or when a release is made."
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
+(setq column-number-mode t)
+
 (set-cursor-color "darkgoldenrod1")
 (add-to-list 'default-frame-alist '(cursor-color . "darkgoldenrod1"))
 (add-to-list 'default-frame-alist '(cursor-type  . box))
