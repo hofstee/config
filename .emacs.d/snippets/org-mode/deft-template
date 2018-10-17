@@ -1,6 +1,5 @@
 # -*- mode: snippet -*-
 # name: deft-template
-# key: deft-template
 # --
 Date created: <`(format-time-string "%Y-%m-%d %H:%M:%S")`>
 Last modified: <>
