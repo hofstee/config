@@ -28,7 +28,13 @@
 ;; Packages Currently Installed
 (use-package kaolin-themes
   :config
-  (load-theme 'kaolin-dark t))
+  (load-theme 'kaolin-dark t)
+  (defun dark ()
+    (interactive)
+    (load-theme 'kaolin-dark t))
+  (defun light ()
+    (interactive)
+    (load-theme 'kaolin-light t)))
 (use-package magit
   :config
   (bind-key* "C-x g" (lambda () (interactive) (magit-status))))
@@ -301,6 +307,13 @@ Inserted by installing org-mode or when a release is made."
 (use-package ws-butler
   :config
   (ws-butler-global-mode))
+
+(use-package vlf :ensure t
+  :config
+  (require 'vlf-setup)
+  (custom-set-variables
+   '(vlf-application 'dont-ask)))
+(setq-default bidi-display-reordering nil)
 
 (use-package string-inflection
   :bind
