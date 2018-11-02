@@ -48,3 +48,6 @@ alias lua="lua5.3"
 set -x PATH "/home/teguhhofstee/.pyenv/bin" $PATH
 status --is-interactive; and . (pyenv init -|psub)
 status --is-interactive; and . (pyenv virtualenv-init -|psub)
+
+# verilator
+alias verilator="perl -wS verilator"
