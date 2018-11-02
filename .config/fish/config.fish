@@ -39,6 +39,8 @@ function fish_prompt
   set_color normal
 end
 
+alias clear-pycache="find . | grep -E \"(__pycache__|.pyc|.pyo)\" | xargs rm -rf"
+
 alias ls="ls --group-directories-first --color=auto"
 alias lua="lua5.3"
 
