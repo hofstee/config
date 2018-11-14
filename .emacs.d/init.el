@@ -112,11 +112,11 @@ Inserted by installing org-mode or when a release is made."
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((lua . t))))
-(use-package slime
-  :config
-  (setq inferior-lisp-program "sbcl")
-  (load (expand-file-name "~/tools/quicklisp/slime-helper.el"))
-  (slime-setup '(slime-company)))
+;; (use-package slime
+;;   :config
+;;   (setq inferior-lisp-program "sbcl")
+;;   (load (expand-file-name "~/tools/quicklisp/slime-helper.el"))
+;;   (slime-setup '(slime-company)))
 (use-package verilog-mode
   :straight (verilog-mode :type git :host github :repo "veripool/verilog-mode"))
 (use-package lua-mode :ensure t)
@@ -239,9 +239,9 @@ Inserted by installing org-mode or when a release is made."
               '((name . "insert-yasnippet-template")))
   (define-key deft-mode-map (kbd "C-<backspace>") 'deft-filter-decrement-word))
 
-(use-package wakatime-mode
-  :config
-  (global-wakatime-mode))
+;; (use-package wakatime-mode :ensure t
+;;   :config
+;;   (global-wakatime-mode))
 ;; (use-package powerline
 ;;   :config
 ;;   (powerline-default-theme))
@@ -263,17 +263,16 @@ Inserted by installing org-mode or when a release is made."
 ;; (use-package sml-modeline
 ;;   :config
 ;;   (sml-modeline-mode 1))
-(use-package dumb-jump
-  :bind
-  (("M-g o" . dumb-jump-go-other-window)
-   ("M-g j" . dumb-jump-go)
-   ("M-g i" . dumb-jump-go-prompt)
-   ("M-g x" . dumb-jump-go-prefer-external)
-   ("M-g z" . dumb-jump-go-prefer-external-other-window))
-  :config
-  (setq dumb-jump-selector 'ivy)
-  ;; (setq dumb-jump-selector 'helm)
-  :ensure)
+;; (use-package dumb-jump :ensure t
+;;   :bind
+;;   (("M-g o" . dumb-jump-go-other-window)
+;;    ("M-g j" . dumb-jump-go)
+;;    ("M-g i" . dumb-jump-go-prompt)
+;;    ("M-g x" . dumb-jump-go-prefer-external)
+;;    ("M-g z" . dumb-jump-go-prefer-external-other-window))
+;;   :config
+;;   (setq dumb-jump-selector 'ivy))
+;;   ;; (setq dumb-jump-selector 'helm))
 
 ;; irony-mode
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
