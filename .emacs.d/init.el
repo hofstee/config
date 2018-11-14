@@ -26,7 +26,7 @@
 ;; (setq straight-use-package-by-default t)
 
 ;; Packages Currently Installed
-(use-package kaolin-themes
+(use-package kaolin-themes :ensure t
   :config
   (load-theme 'kaolin-dark t)
   (defun dark ()
@@ -35,18 +35,18 @@
   (defun light ()
     (interactive)
     (load-theme 'kaolin-light t)))
-(use-package magit
+(use-package magit :ensure t
   :config
   (bind-key* "C-x g" (lambda () (interactive) (magit-status))))
-(use-package git-gutter
+(use-package git-gutter :ensure t
   :init (global-git-gutter-mode 1))
 
 ;; Useful package for editing files that have their own ideas about indentation
-(use-package dtrt-indent
+(use-package dtrt-indent :ensure t
   :config
   (dtrt-indent-mode))
 
-(use-package esup)
+(use-package esup :ensure t)
 
 ;; Installing org with `straight.el'
 (require 'subr-x)
@@ -119,7 +119,7 @@ Inserted by installing org-mode or when a release is made."
   (slime-setup '(slime-company)))
 (use-package verilog-mode
   :straight (verilog-mode :type git :host github :repo "veripool/verilog-mode"))
-(use-package lua-mode)
+(use-package lua-mode :ensure t)
 ;; (use-package treemacs
 ;;   :ensure t
 ;;   :defer t
@@ -158,20 +158,20 @@ Inserted by installing org-mode or when a release is made."
 ;;   :bind (:map global-map
 ;;               ("M-m fP" . treemacs-projectile)
 ;;               ("M-m fp" . treemacs-projectile-toggle)))
-(use-package dashboard
+(use-package dashboard :ensure t
   :config
   (dashboard-setup-startup-hook))
-(use-package yaml-mode
+(use-package yaml-mode :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
-(use-package yasnippet
+(use-package yasnippet :ensure t
   :config (yas-global-mode 1))
-(use-package smartparens
+(use-package smartparens :ensure t
   :config
   (setq sp-show-pair-delay 0)
   (setq sp-show-pair-from-inside t)
   (show-smartparens-global-mode t))
-(use-package undo-tree
+(use-package undo-tree :ensure t
   :config
   (global-undo-tree-mode 1)
   (setq undo-tree-auto-save-history t)
@@ -179,7 +179,7 @@ Inserted by installing org-mode or when a release is made."
   (bind-keys*
    ("C-z"   . (lambda () (interactive) (undo-tree-undo 1)))
    ("C-S-z" . (lambda () (interactive) (undo-tree-redo 1)))))
-(use-package company
+(use-package company :ensure t
   :config
   (add-hook 'after-init-hook 'global-company-mode)
   (use-package company-lua
@@ -192,11 +192,11 @@ Inserted by installing org-mode or when a release is made."
 ;;   :config
 ;;   (add-hook 'c++-mode-hook  'irony-mode)
 ;;   (add-hook 'c-mode-hook    'irony-mode))
-(use-package flycheck
+(use-package flycheck :ensure t
   :config
   (setq flycheck-global-modes (not 'org-mode))
   (global-flycheck-mode))
-(use-package multiple-cursors
+(use-package multiple-cursors :ensure t
   :config
   (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -206,7 +206,7 @@ Inserted by installing org-mode or when a release is made."
 ;;   :config
 ;;   (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 
-(use-package persistent-scratch
+(use-package persistent-scratch :ensure t
   :config
   (persistent-scratch-setup-default))
 
@@ -304,7 +304,7 @@ Inserted by installing org-mode or when a release is made."
          (set-face-attribute 'default nil :font default-font)
          (set-face-attribute 'default t :font default-font)))
 
-(use-package ws-butler
+(use-package ws-butler :ensure t
   :config
   (ws-butler-global-mode))
 
@@ -315,7 +315,7 @@ Inserted by installing org-mode or when a release is made."
    '(vlf-application 'dont-ask)))
 (setq-default bidi-display-reordering nil)
 
-(use-package string-inflection
+(use-package string-inflection :ensure t
   :bind
   (("C-c C-u" . string-inflection-all-cycle)))
 
