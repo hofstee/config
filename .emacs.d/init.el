@@ -423,9 +423,9 @@ Inserted by installing org-mode or when a release is made."
             '((name . "close-after-visit")))
 
 ;; Find a browser for opening URLs
-(setq browse-url-generic-program
-      (executable-find (getenv "BROWSER"))
-      browse-url-browser-function 'browse-url-generic)
+;; (setq browse-url-generic-program
+;;       (executable-find (getenv "BROWSER"))
+;;       browse-url-browser-function 'browse-url-generic)
 
 ;; Save previous location for each file
 (if (version< emacs-version "25.1")
