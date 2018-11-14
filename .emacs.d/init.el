@@ -182,12 +182,27 @@ Inserted by installing org-mode or when a release is made."
 (use-package company :ensure t
   :config
   (add-hook 'after-init-hook 'global-company-mode)
-  (use-package company-lua
+  ;; (use-package company-lua :ensure t
+  ;;   :config
+  ;;   (add-to-list 'company-backends 'company-lua))
+  ;; (use-package slime-company :ensure t
+  ;;   :config
+  ;;   (add-to-list 'company-backends 'slime-company))
+  (use-package company-tabnine :ensure t
     :config
-    (add-to-list 'company-backends 'company-lua))
-  (use-package slime-company
-    :config
-    (add-to-list 'company-backends 'slime-company)))
+    ;; Trigger completion immediately.
+    (setq company-idle-delay 0)
+
+    ;; Number the candidates (use M-1, M-2 etc to select completions).
+    (setq company-show-numbers t)
+
+    ;; Use the tab-and-go frontend.
+    ;; Allows TAB to select and complete at the same time.
+    (company-tng-configure-default)
+    (setq company-frontends
+          '(company-tng-frontend
+            company-pseudo-tooltip-frontend
+            company-echo-metadata-frontend)))
 ;; (use-package irony
 ;;   :config
 ;;   (add-hook 'c++-mode-hook  'irony-mode)
