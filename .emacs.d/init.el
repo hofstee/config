@@ -202,7 +202,7 @@ Inserted by installing org-mode or when a release is made."
     (setq company-frontends
           '(company-tng-frontend
             company-pseudo-tooltip-frontend
-            company-echo-metadata-frontend)))
+            company-echo-metadata-frontend))))
 ;; (use-package irony
 ;;   :config
 ;;   (add-hook 'c++-mode-hook  'irony-mode)
