@@ -231,6 +231,7 @@ Inserted by installing org-mode or when a release is made."
   :commands (deft)
   :config
   (setq deft-recursive t
+        deft-directory "~/private/deft"
         deft-extensions '("md" "org" "tex" "txt")
         deft-default-extension "org"
         deft-auto-save-interval 0.0
