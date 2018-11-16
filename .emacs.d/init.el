@@ -89,7 +89,7 @@ Inserted by installing org-mode or when a release is made."
   (use-package org-wiki
     :straight (org-wiki :type git :host github :repo "caiorss/org-wiki")
     :config
-    (setq org-wiki-location-list '("~/wiki"))
+    (setq org-wiki-location-list '("~/private/wiki"))
     (setq org-wiki-location (car org-wiki-location-list))
     (setq org-wiki-template "")
     (advice-add 'org-wiki-header :override
