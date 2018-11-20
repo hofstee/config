@@ -41,7 +41,7 @@ end
 
 alias clear-pycache="find . | grep -E \"(__pycache__|.pyc|.pyo)\" | xargs rm -rf"
 
-alias ls="ls --group-directories-first --color=auto"
+alias ls="exa -h --git"
 alias lua="lua5.3"
 
 # pyenv
