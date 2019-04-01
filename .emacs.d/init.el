@@ -101,6 +101,7 @@ Inserted by installing org-mode or when a release is made."
   (setq org-adapt-indentation nil
         org-startup-with-inline-images t
         org-support-shift-select t)
+  (add-hook 'org-mode-hook 'turn-on-auto-fill)
   ;; (add-hook 'org-mode-hook
   ;;           (lambda () (setq org-image-actual-width (window-body-width nil t))))
   ;; (add-hook 'window-size-change-functions
