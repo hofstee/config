@@ -1,6 +1,11 @@
 # set fish_plugins emacs
 
 function fish_prompt
+  # virtualfish
+  if set -q VIRTUAL_ENV
+    echo -n -s (set_color -o blue) "(" (basename "$VIRTUAL_ENV") ")" (set_color normal) " "
+  end
+
   # make a neat gradient for the directories on our working directory
   set colors 222 444 666 888 aaa
   set dirs (prompt_pwd | string split "/")
@@ -41,13 +46,17 @@ end
 
 alias clear-pycache="find . | grep -E \"(__pycache__|.pyc|.pyo)\" | xargs rm -rf"
 
-alias ls="exa -h --git"
+alias ls="exa -h --git --group-directories-first"
+alias lm="exa -h --git --group-directories-first -lmr --sort modified"
 alias lua="lua5.3"
 
 # pyenv
 set -x PATH "/home/teguhhofstee/.pyenv/bin" $PATH
 status --is-interactive; and . (pyenv init -|psub)
 status --is-interactive; and . (pyenv virtualenv-init -|psub)
+
+# virtualfish
+eval (python -m virtualfish auto_activation)
 
 # verilator
 alias verilator="perl -wS verilator"
