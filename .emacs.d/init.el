@@ -34,9 +34,14 @@
   (defun light ()
     (interactive)
     (load-theme 'kaolin-light t)))
+
 (use-package magit :ensure t
   :config
+  (use-package magit-todos :ensure t
+    :config
+    (magit-todos-mode))
   (bind-key* "C-x g" (lambda () (interactive) (magit-status))))
+
 (use-package git-gutter :ensure t
   :init (global-git-gutter-mode 1))
 
