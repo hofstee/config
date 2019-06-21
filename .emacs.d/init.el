@@ -113,7 +113,15 @@ Inserted by installing org-mode or when a release is made."
   ;;           (lambda (frame) (setq org-image-actual-width (window-body-width nil t))))
   ;; (add-hook 'window-size-change-functions
   ;;           (lambda (frame) (setq org-image-actual-width (list (window-body-width nil t)))))
-(require 'ob-lua)
+  (require 'ob-lua)
+  (defun org-babel-execute:wavedrom (body params)
+    "Executes wavedrom-cli with org-babel."
+    (let ((tempfile (make-temp-file "wavedrom")))
+      (with-temp-buffer
+        (insert body)
+        (write-region nil nil tempfile))
+      (print (concat "wavedrom -i" tempfile))
+      (org-babel-eval (concat "wavedrom -i " tempfile) "")))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((lua . t))))
