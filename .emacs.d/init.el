@@ -303,6 +303,15 @@ Inserted by installing org-mode or when a release is made."
 ;;   (setq dumb-jump-selector 'ivy))
 ;;   ;; (setq dumb-jump-selector 'helm))
 
+(use-package helm :ensure t
+	     :bind
+	     (("C-x C-f" . #'helm-find-files)
+	      ("M-x" . #'helm-M-x)
+          ("C-s" . helm-occur))
+	     :config
+	     (require 'helm-config)
+	     (helm-mode 1))
+
 ;; irony-mode
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
 ;; irony-mode's buffers by irony-mode's function
@@ -326,8 +335,9 @@ Inserted by installing org-mode or when a release is made."
 (set-cursor-color "darkgoldenrod1")
 (add-to-list 'default-frame-alist '(cursor-color . "darkgoldenrod1"))
 (add-to-list 'default-frame-alist '(cursor-type  . box))
-(let ((default-font "NotoMono-13"))
-  ;; (let ((default-font "Roboto Mono for Powerline-11"))
+;; (let ((default-font "NotoMono-13"))
+;; (let ((default-font "Roboto Mono for Powerline-11"))
+(let ((default-font "DejaVu Sans Mono-14"))
   (progn (add-to-list 'default-frame-alist '(font . default-font))
          (set-face-attribute 'default nil :font default-font)
          (set-face-attribute 'default t :font default-font)))
