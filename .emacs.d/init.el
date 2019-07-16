@@ -50,7 +50,19 @@
   :config
   (dtrt-indent-mode))
 
+(use-package ws-butler :ensure t
+  :config
+  (ws-butler-global-mode))
+
 (use-package esup :ensure t)
+
+(use-package keyfreq :ensure t
+  :config
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
+
+(use-package elmacro :ensure t
+  :init (elmacro-mode))
 
 ;; Installing org with `straight.el'
 (require 'subr-x)
@@ -105,7 +117,8 @@ Inserted by installing org-mode or when a release is made."
                 '((name . "insert-wiki-header"))))
   (setq org-adapt-indentation nil
         org-startup-with-inline-images t
-        org-support-shift-select t)
+        org-support-shift-select t
+        org-catch-invisible-edits 'smart)
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
   ;; (add-hook 'org-mode-hook
   ;;           (lambda () (setq org-image-actual-width (window-body-width nil t))))
@@ -125,14 +138,20 @@ Inserted by installing org-mode or when a release is made."
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((lua . t))))
+
 ;; (use-package slime
 ;;   :config
 ;;   (setq inferior-lisp-program "sbcl")
 ;;   (load (expand-file-name "~/tools/quicklisp/slime-helper.el"))
 ;;   (slime-setup '(slime-company)))
+
 (use-package verilog-mode
   :straight (verilog-mode :type git :host github :repo "veripool/verilog-mode"))
+
 (use-package lua-mode :ensure t)
+
+(use-package go-mode :ensure t)
+
 ;; (use-package treemacs
 ;;   :ensure t
 ;;   :defer t
@@ -171,19 +190,24 @@ Inserted by installing org-mode or when a release is made."
 ;;   :bind (:map global-map
 ;;               ("M-m fP" . treemacs-projectile)
 ;;               ("M-m fp" . treemacs-projectile-toggle)))
+
 (use-package dashboard :ensure t
   :config
   (dashboard-setup-startup-hook))
+
 (use-package yaml-mode :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+
 (use-package yasnippet :ensure t
   :config (yas-global-mode 1))
-(use-package smartparens :ensure t
-  :config
-  (setq sp-show-pair-delay 0)
-  (setq sp-show-pair-from-inside t)
-  (show-smartparens-global-mode t))
+
+;; (use-package smartparens :ensure t
+;;   :config
+;;   (setq sp-show-pair-delay 0)
+;;   (setq sp-show-pair-from-inside t)
+;;   (show-smartparens-global-mode t))
+
 (use-package undo-tree :ensure t
   :config
   (global-undo-tree-mode 1)
@@ -192,6 +216,9 @@ Inserted by installing org-mode or when a release is made."
   (bind-keys*
    ("C-z"   . (lambda () (interactive) (undo-tree-undo 1)))
    ("C-S-z" . (lambda () (interactive) (undo-tree-redo 1)))))
+
+(use-package eglot :ensure t)
+
 (use-package company :ensure t
   :config
   (add-hook 'after-init-hook 'global-company-mode)
@@ -216,20 +243,25 @@ Inserted by installing org-mode or when a release is made."
           '(company-tng-frontend
             company-pseudo-tooltip-frontend
             company-echo-metadata-frontend))))
+
 ;; (use-package irony
 ;;   :config
 ;;   (add-hook 'c++-mode-hook  'irony-mode)
 ;;   (add-hook 'c-mode-hook    'irony-mode))
+
 (use-package flycheck :ensure t
   :config
   (setq flycheck-global-modes (not 'org-mode))
   (global-flycheck-mode))
+
 (use-package multiple-cursors :ensure t
   :config
+  (setq mc/edit-lines-empty-lines 'ignore) ; ignore short lines
   (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
   (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+
 ;; (use-package flycheck-irony
 ;;   :config
 ;;   (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
@@ -268,12 +300,18 @@ Inserted by installing org-mode or when a release is made."
               '((name . "insert-yasnippet-template")))
   (define-key deft-mode-map (kbd "C-<backspace>") 'deft-filter-decrement-word))
 
+(use-package pdf-tools :ensure t
+  :config
+  (pdf-loader-install))
+
 ;; (use-package wakatime-mode :ensure t
 ;;   :config
 ;;   (global-wakatime-mode))
+
 ;; (use-package powerline
 ;;   :config
 ;;   (powerline-default-theme))
+
 ;; (use-package telephone-line
 ;;   :config
 ;;   (setq telephone-line-lhs
@@ -289,9 +327,11 @@ Inserted by installing org-mode or when a release is made."
 ;;   (setq telephone-line-primary-right-separator   'telephone-line-abs-left
 ;;      telephone-line-secondary-right-separator 'telephone-line-abs-hollow-left)
 ;;   (telephone-line-mode 1))
+
 ;; (use-package sml-modeline
 ;;   :config
 ;;   (sml-modeline-mode 1))
+
 ;; (use-package dumb-jump :ensure t
 ;;   :bind
 ;;   (("M-g o" . dumb-jump-go-other-window)
@@ -302,15 +342,6 @@ Inserted by installing org-mode or when a release is made."
 ;;   :config
 ;;   (setq dumb-jump-selector 'ivy))
 ;;   ;; (setq dumb-jump-selector 'helm))
-
-(use-package helm :ensure t
-	     :bind
-	     (("C-x C-f" . #'helm-find-files)
-	      ("M-x" . #'helm-M-x)
-          ("C-s" . helm-occur))
-	     :config
-	     (require 'helm-config)
-	     (helm-mode 1))
 
 ;; irony-mode
 ;; replace the `completion-at-point' and `complete-symbol' bindings in
@@ -342,10 +373,6 @@ Inserted by installing org-mode or when a release is made."
          (set-face-attribute 'default nil :font default-font)
          (set-face-attribute 'default t :font default-font)))
 
-(use-package ws-butler :ensure t
-  :config
-  (ws-butler-global-mode))
-
 ;; Make Emacs handle long lines better
 (global-so-long-mode 1)
 
@@ -354,7 +381,93 @@ Inserted by installing org-mode or when a release is made."
 ;;   (require 'vlf-setup)
 ;;   (custom-set-variables
 ;;    '(vlf-application 'dont-ask)))
-;; (setq-default bidi-display-reordering nil)
+
+(setq-default bidi-display-reordering nil)
+
+;; (use-package fzf :ensure t)
+
+(use-package find-file-in-project :ensure t
+  :config
+  (setq ffip-use-rust-fd t))
+
+(use-package anzu :ensure t
+  :config
+  (global-anzu-mode 1))
+
+(use-package helm :ensure t
+  :config
+  (require 'helm)
+  (require 'helm-config)
+  (setq helm-move-to-line-cycle-in-source nil)
+
+  ;; ; Also kinda slow...
+  ;; (use-package helm-swoop :ensure t
+  ;;   :config
+  ;;   (global-set-key (kbd "C-s") 'helm-swoop))
+
+  ;; ; This is much slower than swiper using ivy for some reason
+  ;; (use-package swiper-helm :ensure t
+  ;;   :config
+  ;;   (global-set-key (kbd "C-s") 'swiper-helm))
+
+  ;; (use-package swiper :ensure t
+  ;;   :config
+  ;;   (require 'counsel)
+  ;;   (require 'ivy)
+  ;;   (global-set-key (kbd "C-s") 'counsel-grep-or-swiper))
+
+  ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+  ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+  ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
+  (global-set-key (kbd "C-c h") 'helm-command-prefix)
+  (global-unset-key (kbd "C-x c"))
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
+  (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+
+  (when (executable-find "rg")
+    (setq helm-grep-ag-command "rg --color=always --colors 'match:fg:black' --colors 'match:bg:yellow' --smart-case --no-heading --line-number %s %s %s"
+          helm-grep-ag-pipe-cmd-switches '("--colors 'match:fg:black'" "--colors 'match:bg:yellow'")))
+
+  (when (executable-find "curl")
+    (setq helm-google-suggest-use-curl-p t))
+
+  (setq helm-split-window-in-side-p           t   ; open helm buffer inside current window, not occupy whole other window
+        helm-move-to-line-cycle-in-source     nil ; allow moving between sources in helm results
+        helm-ff-search-library-in-sexp        t   ; search for library in `require' and `declare-function' sexp .
+        helm-scroll-amount                    8   ; scroll 8 lines other window using M-<next>/M-<prior>
+        helm-ff-file-name-history-use-recentf t
+        helm-echo-input-in-header-line t)
+
+  (defun spacemacs//helm-hide-minibuffer-maybe ()
+    "Hide minibuffer in Helm session if we use the header line as input field."
+    (when (with-helm-buffer helm-echo-input-in-header-line)
+      (let ((ov (make-overlay (point-min) (point-max) nil nil t)))
+        (overlay-put ov 'window (selected-window))
+        (overlay-put ov 'face
+                     (let ((bg-color (face-background 'default nil)))
+                       `(:background ,bg-color :foreground ,bg-color)))
+        (setq-local cursor-type nil))))
+
+
+  (add-hook 'helm-minibuffer-set-up-hook
+            'spacemacs//helm-hide-minibuffer-maybe)
+
+  (setq helm-autoresize-max-height 0)
+  (setq helm-autoresize-min-height 20)
+  (helm-autoresize-mode 1)
+
+  (helm-mode 1))
+
+(use-package helm-rg :ensure t)
+
+(use-package helm-org-rifle :ensure t)
+
+(use-package tuareg :ensure t)
 
 (use-package string-inflection :ensure t
   :bind
@@ -392,6 +505,9 @@ Inserted by installing org-mode or when a release is made."
 
 ;; Save buffers on exit
 (desktop-save-mode 1)
+;; ;; Force loading desktop file if in use by another process
+;; (setq desktop-load-locked-desktop t)
+;;  (call-interactively 'desktop-read t (vector "~/.emacs.d/desktops/" t))
 
 ;; Custom functions
 (defun align-comments (beginning end)
