@@ -336,33 +336,36 @@ Inserted by installing org-mode or when a release is made."
   :config
   (ws-butler-global-mode))
 
-(use-package vlf :ensure t
-  :config
-  (require 'vlf-setup)
-  (custom-set-variables
-   '(vlf-application 'dont-ask)))
-(setq-default bidi-display-reordering nil)
+;; Make Emacs handle long lines better
+(global-so-long-mode 1)
+
+;; (use-package vlf :ensure t
+;;   :config
+;;   (require 'vlf-setup)
+;;   (custom-set-variables
+;;    '(vlf-application 'dont-ask)))
+;; (setq-default bidi-display-reordering nil)
 
 (use-package string-inflection :ensure t
   :bind
   (("C-c C-u" . string-inflection-all-cycle)))
 
-(defun powerline-hud (face1 face2 &optional width)
-  "Return an XPM of relative buffer location using FACE1 and FACE2 of optional WIDTH."
-  (unless width (setq width 2))
-  (let ((color1 (if face1 (face-background face1) "None"))
-        (color2 (if face2 (face-background face2) "None"))
-        (height (or powerline-height (frame-char-height)))
-        pmax
-        pmin
-        (ws (window-start))
-        (we (window-end)))
-    (save-restriction
-      (widen)
-      (setq pmax (point-max))
-      (setq pmin (point-min)))
-    (pl/percent-xpm height pmax pmin we ws
-                    (* (frame-char-width) width) color1 color2)))
+;; (defun powerline-hud (face1 face2 &optional width)
+;;   "Return an XPM of relative buffer location using FACE1 and FACE2 of optional WIDTH."
+;;   (unless width (setq width 2))
+;;   (let ((color1 (if face1 (face-background face1) "None"))
+;;         (color2 (if face2 (face-background face2) "None"))
+;;         (height (or powerline-height (frame-char-height)))
+;;         pmax
+;;         pmin
+;;         (ws (window-start))
+;;         (we (window-end)))
+;;     (save-restriction
+;;       (widen)
+;;       (setq pmax (point-max))
+;;       (setq pmin (point-min)))
+;;     (pl/percent-xpm height pmax pmin we ws
+;;                     (* (frame-char-width) width) color1 color2)))
 
 ;; Configure tramp
 (require 'tramp)
