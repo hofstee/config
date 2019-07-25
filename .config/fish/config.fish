@@ -7,7 +7,7 @@ function fish_prompt
   end
 
   # make a neat gradient for the directories on our working directory
-  set colors 222 444 666 888 aaa
+  set colors 444 666 888 aaa
   set dirs (prompt_pwd | string split "/")
   set num_dirs (count $dirs)
 
