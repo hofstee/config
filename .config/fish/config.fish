@@ -44,6 +44,17 @@ function fish_prompt
   set_color normal
 end
 
+# TRAMP workaround
+if test "$TERM" = "dumb"
+  function fish_prompt
+    echo "\$ "
+  end
+
+  function fish_right_prompt; end
+  function fish_greeting; end
+  function fish_title; end
+end
+
 alias clear-pycache="find . | grep -E \"(__pycache__|.pyc|.pyo)\" | xargs rm -rf"
 
 alias ls="exa -h --git --group-directories-first"
