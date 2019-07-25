@@ -11,6 +11,10 @@ function fish_prompt
   set dirs (prompt_pwd | string split "/")
   set num_dirs (count $dirs)
 
+  if set -q SSH_CONNECTION
+     echo -n -s (set_color -o green) "[" (hostname) "] "
+  end
+
   for x in (seq $num_dirs)
     set col_idx (math (count $colors) - (math $num_dirs - $x))
     if test $col_idx -lt 1
