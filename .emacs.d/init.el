@@ -118,7 +118,9 @@ Inserted by installing org-mode or when a release is made."
   (setq org-adapt-indentation nil
         org-startup-with-inline-images t
         org-support-shift-select t
-        org-catch-invisible-edits 'smart)
+        org-catch-invisible-edits 'smart
+        org-cycle-separator-lines 0
+        org-log-done 'time)
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
   ;; (add-hook 'org-mode-hook
   ;;           (lambda () (setq org-image-actual-width (window-body-width nil t))))
