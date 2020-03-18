@@ -559,8 +559,8 @@ Inserted by installing org-mode or when a release is made."
  ("C-<up>"    . (lambda () (interactive) (scroll-down 3)))
  ("C-<down>"  . (lambda () (interactive) (scroll-up   3)))
  ;; M-up/down/left/right to switch window focus
- ("M-<prior>" . (lambda () (interactive) (windmove-up)))
- ("M-<next>"  . (lambda () (interactive) (windmove-down)))
+ ("M-<up>"    . (lambda () (interactive) (windmove-up)))
+ ("M-<down>"  . (lambda () (interactive) (windmove-down)))
  ("M-<left>"  . (lambda () (interactive) (windmove-left)))
  ("M-<right>" . (lambda () (interactive) (windmove-right))))
 
