@@ -504,6 +504,7 @@ Inserted by installing org-mode or when a release is made."
                  ("/bin/sh")))
                (tramp-remote-shell "/bin/sh")
                (tramp-remote-shell-args ("-c"))))
+(use-package docker-tramp :ensure t)
 
 ;; Save buffers on exit
 (desktop-save-mode 1)
