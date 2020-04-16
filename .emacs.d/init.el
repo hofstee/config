@@ -148,11 +148,30 @@ Inserted by installing org-mode or when a release is made."
 ;;   (slime-setup '(slime-company)))
 
 (use-package verilog-mode
-  :straight (verilog-mode :type git :host github :repo "veripool/verilog-mode"))
+  :straight (verilog-mode :type git :host github :repo "veripool/verilog-mode")
+  :config
+  (setq verilog-indent-level             3
+        verilog-indent-level-module      3
+        verilog-indent-level-declaration 3
+        verilog-indent-level-behavioral  3
+        verilog-indent-level-directive   1
+        verilog-case-indent              2
+        verilog-auto-newline             nil
+        verilog-auto-indent-on-newline   t
+        verilog-tab-always-indent        t
+        verilog-auto-endcomments         nil
+;;         verilog-minimum-comment-distance 40
+;;         verilog-indent-begin-after-if    t
+        verilog-auto-lineup              nil
+;;         verilog-linter                   "my_lint_shell_command"
+        ))
+
 
 (use-package lua-mode :ensure t)
 
 (use-package go-mode :ensure t)
+
+(use-package cmake-mode :ensure t)
 
 ;; (use-package treemacs
 ;;   :ensure t
@@ -334,6 +353,15 @@ Inserted by installing org-mode or when a release is made."
 ;;   :config
 ;;   (sml-modeline-mode 1))
 
+(use-package ghub :ensure t)
+
+(use-package doom-modeline :ensure t
+  :init
+  (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-icon nil
+        doom-modeline-github t))
+
 ;; (use-package dumb-jump :ensure t
 ;;   :bind
 ;;   (("M-g o" . dumb-jump-go-other-window)
@@ -359,9 +387,14 @@ Inserted by installing org-mode or when a release is made."
 ;; Personal preferences
 (setq frame-resize-pixelwise t)
 (global-visual-line-mode 1)
+
+;; Disable all extra UI bars
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+
+;; Replace highlighted region with what I type
+(delete-selection-mode 1)
 
 (setq column-number-mode t)
 
@@ -504,7 +537,9 @@ Inserted by installing org-mode or when a release is made."
                  ("/bin/sh")))
                (tramp-remote-shell "/bin/sh")
                (tramp-remote-shell-args ("-c"))))
+
 (use-package docker-tramp :ensure t)
+(use-package dockerfile-mode :ensure t)
 
 ;; Save buffers on exit
 (desktop-save-mode 1)
@@ -559,14 +594,26 @@ Inserted by installing org-mode or when a release is made."
  ("C-<up>"    . (lambda () (interactive) (scroll-down 3)))
  ("C-<down>"  . (lambda () (interactive) (scroll-up   3)))
  ;; M-up/down/left/right to switch window focus
- ("M-<up>"    . (lambda () (interactive) (windmove-up)))
- ("M-<down>"  . (lambda () (interactive) (windmove-down)))
+ ("<prior>"   . (lambda () (interactive) (windmove-up)))
+ ("<next>"    . (lambda () (interactive) (windmove-down)))
  ("M-<left>"  . (lambda () (interactive) (windmove-left)))
- ("M-<right>" . (lambda () (interactive) (windmove-right))))
+ ("M-<right>" . (lambda () (interactive) (windmove-right)))
+ ;; Better case-conversion commands
+ ("M-l"       . downcase-dwim)
+ ("M-u"       . upcase-dwim)
+ ("M-c"       . capitalize-dwim)
+ ;; hi-lock shortcuts
+ ("M-s M-s"   . (lambda () (interactive) (hi-lock-face-symbol-at-point)))
+ ("M-s M-u"   . (lambda () (interactive) (hi-lock-unface-buffer t))))
 
-;; Close `*Ibuffer*' after calling `ibuffer-visit-buffer'
-(advice-add 'ibuffer-visit-buffer :after (lambda (_) (kill-buffer "*Ibuffer*"))
-            '((name . "close-after-visit")))
+;; Hide certain buffers while cycling through windows
+(set-frame-parameter (selected-frame) 'buffer-predicate
+                     (lambda (buf) (and
+                                    ;; Buffers starting with '*'
+                                    (not (string-match-p "^*" (buffer-name buf)))
+                                    ;; magit buffers
+                                    (not (string-match-p "^magit.*:" (buffer-name buf))))))
+
 
 ;; Find a browser for opening URLs
 ;; (setq browse-url-generic-program
