@@ -65,14 +65,12 @@ alias ls="exa -h --git --group-directories-first"
 alias lm="exa -h --git --group-directories-first -lmr --sort modified"
 alias lua="lua5.3"
 
-# pyenv
-set -x PATH "/home/teguhhofstee/.pyenv/bin" $PATH
-status --is-interactive; and . (pyenv init -|psub)
-status --is-interactive; and . (pyenv virtualenv-init -|psub)
 alias rg="rg -S"
 
-# virtualfish
-eval (python -m virtualfish auto_activation)
-
 # verilator
-alias verilator="perl -wS verilator"
+alias verilator="perl -wS verilator"# pyenv
+set -Ux PYENV_ROOT $HOME/.pyenv
+set -Ux fish_user_paths $PYENV_ROOT/bin $fish_user_paths
+status --is-interactive; and pyenv init - | source
+status --is-interactive; and pyenv virtualenv-init - | source
+
