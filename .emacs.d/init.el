@@ -1,4 +1,5 @@
 (require 'package)
+(package-initialize)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/"))
@@ -6,6 +7,14 @@
              '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (add-to-list 'package-archives
              '("org" . "https://orgmode.org/elpa/"))
+;; (package-refresh-contents 1)
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
+;; ;; Bootstrap `use-package'
+;; (eval-when-compile
+;;   ;; Following line is not needed if use-package.el is in ~/.emacs.d
+;;   (add-to-list 'load-path "<path where use-package is installed>")
+;;   (require 'use-package))
 
 ;; Bootstrap `straight.el'
 (defvar bootstrap-version)
@@ -34,6 +43,16 @@
   (defun light ()
     (interactive)
     (load-theme 'kaolin-light t)))
+
+;; Highlight the portion of code currently being worked on
+(use-package focus :ensure t
+  :config
+  (add-to-list 'focus-mode-to-thing '(python-mode . paragraph)))
+
+;; Dim other currently open windows
+(use-package dimmer :ensure t
+  :config
+  (dimmer-mode t))
 
 (use-package magit :ensure t
   :config
@@ -171,6 +190,11 @@ Inserted by installing org-mode or when a release is made."
 
 (use-package go-mode :ensure t)
 
+(use-package rust-mode :ensure t
+  :config
+  (bind-keys*
+   ("C-c C-c" . rust-run)))
+
 (use-package cmake-mode :ensure t)
 
 ;; (use-package treemacs
@@ -220,6 +244,8 @@ Inserted by installing org-mode or when a release is made."
   :config
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 
+(use-package bazel-mode :ensure t)
+
 (use-package yasnippet :ensure t
   :config (yas-global-mode 1))
 
@@ -229,14 +255,20 @@ Inserted by installing org-mode or when a release is made."
 ;;   (setq sp-show-pair-from-inside t)
 ;;   (show-smartparens-global-mode t))
 
-(use-package undo-tree :ensure t
+;; (use-package undo-tree :ensure t
+;;   :config
+;;   (global-undo-tree-mode 1)
+;;   (setq undo-tree-auto-save-history t)
+;;   (defalias 'redo 'undo-tree-redo)
+;;   (bind-keys*
+;;    ("C-z"   . undo)
+;;    ("C-S-z" . redo)))
+
+(use-package undo-fu :ensure t
   :config
-  (global-undo-tree-mode 1)
-  (setq undo-tree-auto-save-history t)
-  (defalias 'redo 'undo-tree-redo)
   (bind-keys*
-   ("C-z"   . (lambda () (interactive) (undo-tree-undo 1)))
-   ("C-S-z" . (lambda () (interactive) (undo-tree-redo 1)))))
+   ("C-z"   . undo-fu-only-undo)
+   ("C-S-z" . undo-fu-only-redo)))
 
 (use-package eglot :ensure t)
 
@@ -283,6 +315,11 @@ Inserted by installing org-mode or when a release is made."
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
   (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
 
+(use-package phi-search :ensure t
+  :config
+  (global-set-key (kbd "C-s") 'phi-search)
+  (global-set-key (kbd "C-r") 'phi-search-backward))
+
 ;; (use-package flycheck-irony
 ;;   :config
 ;;   (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
@@ -321,9 +358,9 @@ Inserted by installing org-mode or when a release is made."
               '((name . "insert-yasnippet-template")))
   (define-key deft-mode-map (kbd "C-<backspace>") 'deft-filter-decrement-word))
 
-(use-package pdf-tools :ensure t
-  :config
-  (pdf-loader-install))
+;; (use-package pdf-tools :ensure t
+;;   :config
+;;   (pdf-loader-install))
 
 ;; (use-package wakatime-mode :ensure t
 ;;   :config
@@ -403,13 +440,14 @@ Inserted by installing org-mode or when a release is made."
 (add-to-list 'default-frame-alist '(cursor-type  . box))
 ;; (let ((default-font "NotoMono-13"))
 ;; (let ((default-font "Roboto Mono for Powerline-11"))
-(let ((default-font "DejaVu Sans Mono-14"))
-  (progn (add-to-list 'default-frame-alist '(font . default-font))
-         (set-face-attribute 'default nil :font default-font)
-         (set-face-attribute 'default t :font default-font)))
+;; (let ((default-font "DejaVu Sans Mono-14"))
+;;   (progn (add-to-list 'default-frame-alist '(font . default-font))
+;;          (set-face-attribute 'default nil :font default-font)
+;;          (set-face-attribute 'default t :font default-font)))
+(add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-14"))
 
 ;; Make Emacs handle long lines better
-(global-so-long-mode 1)
+;; (global-so-long-mode 1)
 
 ;; (use-package vlf :ensure t
 ;;   :config
@@ -501,6 +539,10 @@ Inserted by installing org-mode or when a release is made."
 (use-package helm-rg :ensure t)
 
 (use-package helm-org-rifle :ensure t)
+
+(use-package lsp-mode :ensure t
+  :hook ((python-mode . lsp)
+         (rust-mode   . lsp)))
 
 (use-package tuareg :ensure t)
 
