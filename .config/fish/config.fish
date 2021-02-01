@@ -67,10 +67,26 @@ alias lua="lua5.3"
 
 alias rg="rg -S"
 
-# verilator
-alias verilator="perl -wS verilator"# pyenv
-set -Ux PYENV_ROOT $HOME/.pyenv
-set -Ux fish_user_paths $PYENV_ROOT/bin $fish_user_paths
-status --is-interactive; and pyenv init - | source
-status --is-interactive; and pyenv virtualenv-init - | source
+# # pyenv
+# set -x PATH "/home/teguhhofstee/.pyenv/bin" $PATH
+# status --is-interactive; and . (pyenv init -|psub)
+# status --is-interactive; and . (pyenv virtualenv-init -|psub)
 
+# verilator
+alias verilator="perl -wS verilator"
+
+# wsl2 x11 forwarding
+if set -q WSL_INTEROP
+   export DISPLAY=(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
+end
+
+# nix
+bass source ~/.nix-profile/etc/profile.d/nix{,-daemon}.sh
+
+set -x PATH "$HOME/.local/bin" $PATH
+
+# vtune
+bass source /opt/intel/vtune_profiler/env/vars.sh
+
+# rust
+source "$HOME/.cargo/env"
