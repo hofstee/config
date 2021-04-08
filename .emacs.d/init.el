@@ -2,13 +2,13 @@
 (package-initialize)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/"))
+             '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (add-to-list 'package-archives
              '("org" . "https://orgmode.org/elpa/"))
 ;; (package-refresh-contents 1)
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 ;; ;; Bootstrap `use-package'
 ;; (eval-when-compile
@@ -185,7 +185,6 @@ Inserted by installing org-mode or when a release is made."
 ;;         verilog-linter                   "my_lint_shell_command"
         ))
 
-
 (use-package lua-mode :ensure t)
 
 (use-package go-mode :ensure t)
@@ -242,7 +241,9 @@ Inserted by installing org-mode or when a release is made."
 
 (use-package yaml-mode :ensure t
   :config
-  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+  (add-to-list 'auto-mode-alist '("\\.cheby\\'" . yaml-mode))
+  (add-to-list 'auto-mode-alist '("\\.shapo\\'" . yaml-mode)))
 
 (use-package bazel-mode :ensure t)
 
@@ -272,30 +273,30 @@ Inserted by installing org-mode or when a release is made."
 
 (use-package eglot :ensure t)
 
-(use-package company :ensure t
-  :config
-  (add-hook 'after-init-hook 'global-company-mode)
-  ;; (use-package company-lua :ensure t
-  ;;   :config
-  ;;   (add-to-list 'company-backends 'company-lua))
-  ;; (use-package slime-company :ensure t
-  ;;   :config
-  ;;   (add-to-list 'company-backends 'slime-company))
-  (use-package company-tabnine :ensure t
-    :config
-    ;; Trigger completion immediately.
-    (setq company-idle-delay 0)
+;; (use-package company :ensure t
+;;   :config
+;;   (add-hook 'after-init-hook 'global-company-mode)
+;;   ;; (use-package company-lua :ensure t
+;;   ;;   :config
+;;   ;;   (add-to-list 'company-backends 'company-lua))
+;;   ;; (use-package slime-company :ensure t
+;;   ;;   :config
+;;   ;;   (add-to-list 'company-backends 'slime-company))
+;;   (use-package company-tabnine :ensure t
+;;     :config
+;;     ;; Trigger completion immediately.
+;;     (setq company-idle-delay 0)
 
-    ;; Number the candidates (use M-1, M-2 etc to select completions).
-    (setq company-show-numbers t)
+;;     ;; Number the candidates (use M-1, M-2 etc to select completions).
+;;     (setq company-show-numbers t)
 
-    ;; Use the tab-and-go frontend.
-    ;; Allows TAB to select and complete at the same time.
-    (company-tng-configure-default)
-    (setq company-frontends
-          '(company-tng-frontend
-            company-pseudo-tooltip-frontend
-            company-echo-metadata-frontend))))
+;;     ;; Use the tab-and-go frontend.
+;;     ;; Allows TAB to select and complete at the same time.
+;;     (company-tng-configure-default)
+;;     (setq company-frontends
+;;           '(company-tng-frontend
+;;             company-pseudo-tooltip-frontend
+;;             company-echo-metadata-frontend))))
 
 ;; (use-package irony
 ;;   :config
@@ -623,30 +624,72 @@ Inserted by installing org-mode or when a release is made."
 (setq jit-lock-defer-time nil)         ;; don't defer fontification
 (setq fast-but-imprecise-scrolling 't) ;; make scrolling faster
 
+;; delete without adding to kill-ring, from ErgoEmacs
+(defun my-delete-word (arg)
+  "Delete characters forward until encountering the end of a word.
+With argument, do this that many times.
+This command does not push text to `kill-ring'."
+  (interactive "p")
+  (delete-region
+   (point)
+   (progn
+     (forward-word arg)
+     (point))))
+
+(defun my-backward-delete-word (arg)
+  "Delete characters backward until encountering the beginning of a word.
+With argument, do this that many times.
+This command does not push text to `kill-ring'."
+  (interactive "p")
+  (my-delete-word (- arg)))
+
+(defun my-delete-line ()
+  "Delete text from current position to end of line char.
+This command does not push text to `kill-ring'."
+  (interactive)
+  (delete-region
+   (point)
+   (progn (end-of-line 1) (point)))
+  (delete-char 1))
+
+(defun my-delete-line-backward ()
+  "Delete text between the beginning of the line to the cursor position.
+This command does not push text to `kill-ring'."
+  (interactive)
+  (let (p1 p2)
+    (setq p1 (point))
+    (beginning-of-line 1)
+    (setq p2 (point))
+    (delete-region p1 p2)))
+
 ;; Personal global keybindings
 (bind-keys*
  ;; Toggle comments for selected lines
- ("C-/"       . (lambda () (interactive) (comment-or-uncomment-lines)))
+ ("C-/"           . (lambda () (interactive) (comment-or-uncomment-lines)))
  ;; Close all open buffers
- ("C-x K"     . (lambda () (interactive) (nuke-all-buffers)))
- ;; Open *scratch* on C-x b
- ("C-x b"     . (lambda () (interactive) (switch-to-buffer (get-buffer-create "*scratch*"))))
- ("C-x C-b"   . (lambda () (interactive) (ibuffer)))
+ ("C-x K"         . (lambda () (interactive) (nuke-all-buffers)))
+ ;; Open `*scratch*' on C-x b
+ ("C-x b"         . (lambda () (interactive) (switch-to-buffer (get-buffer-create "*scratch*"))))
+ ("C-x C-b"       . (lambda () (interactive) (ibuffer)))
  ;; C-up/down to scroll the buffer without moving the point
- ("C-<up>"    . (lambda () (interactive) (scroll-down 3)))
- ("C-<down>"  . (lambda () (interactive) (scroll-up   3)))
+ ("C-<up>"        . (lambda () (interactive) (scroll-down 3)))
+ ("C-<down>"      . (lambda () (interactive) (scroll-up   3)))
  ;; M-up/down/left/right to switch window focus
- ("<prior>"   . (lambda () (interactive) (windmove-up)))
- ("<next>"    . (lambda () (interactive) (windmove-down)))
- ("M-<left>"  . (lambda () (interactive) (windmove-left)))
- ("M-<right>" . (lambda () (interactive) (windmove-right)))
+ ("M-<up>"        . (lambda () (interactive) (windmove-up)))
+ ("<prior>"       . (lambda () (interactive) (windmove-up))) ;; ChromeOS-specific
+ ("M-<udown>"     . (lambda () (interactive) (windmove-down)))
+ ("<next>"        . (lambda () (interactive) (windmove-down))) ;; ChromeOS-specific
+ ("M-<left>"      . (lambda () (interactive) (windmove-left)))
+ ("M-<right>"     . (lambda () (interactive) (windmove-right)))
  ;; Better case-conversion commands
- ("M-l"       . downcase-dwim)
- ("M-u"       . upcase-dwim)
- ("M-c"       . capitalize-dwim)
+ ("M-l"           . downcase-dwim)
+ ("M-u"           . upcase-dwim)
+ ("M-c"           . capitalize-dwim)
+ ;; Don't have C-backspace put things in `kill-ring'
+ ("C-<backspace>" . my-backward-delete-word)
  ;; hi-lock shortcuts
- ("M-s M-s"   . (lambda () (interactive) (hi-lock-face-symbol-at-point)))
- ("M-s M-u"   . (lambda () (interactive) (hi-lock-unface-buffer t))))
+ ("M-s M-s"       . (lambda () (interactive) (hi-lock-face-symbol-at-point)))
+ ("M-s M-u"       . (lambda () (interactive) (hi-lock-unface-buffer t))))
 
 ;; Hide certain buffers while cycling through windows
 (set-frame-parameter (selected-frame) 'buffer-predicate
