@@ -37,7 +37,7 @@ function fish_prompt
     set is_git (git rev-parse --is-inside-work-tree 2>&1 >$temp)
     if test $status -eq 0
       set_color $colors[(math (count $colors) - 2)]
-      printf ' %s' (git rev-parse --abbrev-ref HEAD)
+      printf ' %s' (git rev-parse --abbrev-ref HEAD 2>/dev/null)
     end
   end
 
